@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:id="@+id/wordLayout"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/key_background">
+
+    <Button
+        android:id="@+id/renew"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="35dp"
+        android:background="@drawable/renew_btn"
+        />
+
+    <Button
+        android:id="@+id/cword1"
+        android:layout_width="0px"
+        android:layout_weight="3"
+        android:layout_height="35dp"
+        android:background="@drawable/correctbutton_bg"
+        android:text = ""/>
+
+    <Button
+        android:id="@+id/cword2"
+        android:layout_width="0px"
+        android:layout_weight="3"
+        android:layout_height="35dp"
+        android:background="@drawable/correctbutton_bg"
+        android:text = ""/>
+
+    <Button
+        android:id="@+id/cword3"
+        android:layout_width="0px"
+        android:layout_weight="3"
+        android:layout_height="35dp"
+        android:background="@drawable/correctbutton_bg"
+        android:text = ""/>
+
+    <Button
+        android:id="@+id/changeBt2"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="35dp"
+        android:background="@drawable/set_complete_bar" />
+
+</LinearLayout>
