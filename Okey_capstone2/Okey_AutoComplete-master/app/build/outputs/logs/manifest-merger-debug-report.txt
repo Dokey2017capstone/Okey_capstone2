@@ -1,0 +1,87 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:2:1-21:12
+	package
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:3:5-46
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+application
+ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:5:5-19:19
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Karry\.android\build-cache\71846298994eb5302b07f2bf2c43a045bf4c8274\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Karry\.android\build-cache\e626eb651d183f217c5822c277c062a2374527b6\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Karry\.android\build-cache\d6ab72f2feb066975dbe538e3c840c47b66d6d01\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Karry\.android\build-cache\afa6bae247eee13887b51dd28dcf970f536c6b93\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Karry\.android\build-cache\cc0c471b4caf2a638b5ecc195dab1619f1393e90\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Karry\.android\build-cache\44d190dda9026102b72734f0e1ed2e3242770f05\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Karry\.android\build-cache\a859f4ba2b5e062a7eec04a43e3bf2c5419c330b\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Karry\.android\build-cache\c9e2680281a1b97b41bdbed87149a07c69d004c8\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Karry\.android\build-cache\d1def1a0f3118fc3e3e52b166cf4c6e6b037f172\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Karry\.android\build-cache\a05b28ea329bd49c9aa359766767fad7aad1f115\output\AndroidManifest.xml:9:5-20
+	android:label
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:8:9-41
+	android:supportsRtl
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:10:9-35
+	android:roundIcon
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:9:9-54
+	android:allowBackup
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:6:9-35
+	android:icon
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:7:9-43
+	android:theme
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:11:9-40
+activity#com.example.karry.myapplication.Main
+ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:12:9-18:20
+	android:name
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:12:19-39
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:13:13-17:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:14:17-69
+	android:name
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:16:17-77
+	android:name
+		ADDED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml:16:27-74
+uses-sdk
+INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Karry\.android\build-cache\71846298994eb5302b07f2bf2c43a045bf4c8274\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Karry\.android\build-cache\e626eb651d183f217c5822c277c062a2374527b6\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Karry\.android\build-cache\d6ab72f2feb066975dbe538e3c840c47b66d6d01\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Karry\.android\build-cache\afa6bae247eee13887b51dd28dcf970f536c6b93\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Karry\.android\build-cache\cc0c471b4caf2a638b5ecc195dab1619f1393e90\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Karry\.android\build-cache\44d190dda9026102b72734f0e1ed2e3242770f05\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Karry\.android\build-cache\a859f4ba2b5e062a7eec04a43e3bf2c5419c330b\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Karry\.android\build-cache\c9e2680281a1b97b41bdbed87149a07c69d004c8\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Karry\.android\build-cache\d1def1a0f3118fc3e3e52b166cf4c6e6b037f172\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Karry\.android\build-cache\a05b28ea329bd49c9aa359766767fad7aad1f115\output\AndroidManifest.xml:5:5-7:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Karry\.android\build-cache\71846298994eb5302b07f2bf2c43a045bf4c8274\output\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Karry\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Karry\.android\build-cache\71846298994eb5302b07f2bf2c43a045bf4c8274\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Karry\.android\build-cache\e626eb651d183f217c5822c277c062a2374527b6\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Karry\.android\build-cache\d6ab72f2feb066975dbe538e3c840c47b66d6d01\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Karry\.android\build-cache\afa6bae247eee13887b51dd28dcf970f536c6b93\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Karry\.android\build-cache\cc0c471b4caf2a638b5ecc195dab1619f1393e90\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Karry\.android\build-cache\44d190dda9026102b72734f0e1ed2e3242770f05\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Karry\.android\build-cache\a859f4ba2b5e062a7eec04a43e3bf2c5419c330b\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Karry\.android\build-cache\c9e2680281a1b97b41bdbed87149a07c69d004c8\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Karry\.android\build-cache\d1def1a0f3118fc3e3e52b166cf4c6e6b037f172\output\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Karry\.android\build-cache\71846298994eb5302b07f2bf2c43a045bf4c8274\output\AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Karry\.android\build-cache\71846298994eb5302b07f2bf2c43a045bf4c8274\output\AndroidManifest.xml:26:9-47
