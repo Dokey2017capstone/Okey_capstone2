@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/cPopUp1"
+        android:id="@+id/correctionPopup1"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,18 +16,8 @@
         android:background="@drawable/popupbutton_bg"
         tools:ignore="HardcodedText" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/cPopUp2"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="4dp"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-        <!--android:background="@drawable/popupbutton_bg"-->
-        <!--tools:ignore="HardcodedText" />-->
-
     <TextView
-        android:id="@+id/cPopUp3"
+        android:id="@+id/correctionPopup2"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

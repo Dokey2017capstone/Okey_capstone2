@@ -7,7 +7,7 @@
     android:background="@color/key_background">
 
     <Button
-        android:id="@+id/renew"
+        android:id="@+id/renewCorrectionWord"
         android:layout_width="0px"
         android:layout_weight="1"
         android:layout_height="35dp"
@@ -15,7 +15,7 @@
         />
 
     <Button
-        android:id="@+id/cword1"
+        android:id="@+id/correctionWord1"
         android:layout_width="0px"
         android:layout_weight="3"
         android:layout_height="35dp"
@@ -23,7 +23,7 @@
         android:text = ""/>
 
     <Button
-        android:id="@+id/cword2"
+        android:id="@+id/correctionWord2"
         android:layout_width="0px"
         android:layout_weight="3"
         android:layout_height="35dp"
@@ -31,7 +31,7 @@
         android:text = ""/>
 
     <Button
-        android:id="@+id/cword3"
+        android:id="@+id/correctionWord3"
         android:layout_width="0px"
         android:layout_weight="3"
         android:layout_height="35dp"
@@ -39,7 +39,7 @@
         android:text = ""/>
 
     <Button
-        android:id="@+id/changeBt2"
+        android:id="@+id/cor2ComChangeButton"
         android:layout_width="0px"
         android:layout_weight="1"
         android:layout_height="35dp"

@@ -7,28 +7,28 @@
     android:background="@color/key_background">
 
     <Button
-        android:id="@+id/word1"
+        android:id="@+id/completionWord1"
         android:layout_width="0px"
         android:layout_weight="3.3"
         android:layout_height="35dp"
         android:background="@drawable/button_bg"/>
 
     <Button
-        android:id="@+id/word2"
+        android:id="@+id/completionWord2"
         android:layout_width="0px"
         android:layout_weight="3.3"
         android:layout_height="35dp"
         android:background="@drawable/button_bg"/>
 
     <Button
-        android:id="@+id/word3"
+        android:id="@+id/completionWord3"
         android:layout_width="0px"
         android:layout_weight="3.3"
         android:layout_height="35dp"
         android:background="@drawable/button_bg"/>
 
     <Button
-        android:id="@+id/changeBt"
+        android:id="@+id/com2CorChangeButton"
         android:layout_width="0px"
         android:layout_weight="1"
         android:layout_height="35dp"
