@@ -318,6 +318,38 @@ public class SoftKeyboard extends InputMethodService
     {
         return mInputView.getKeyboard() == mHangulKeyboard || mInputView.getKeyboard() == mHangulShiftedKeyboard;
     }
+    private boolean isSymbolHangulKeyboardCurrent()
+    {
+        return mInputView.getKeyboard() == mSymbolsKeyboard || mInputView.getKeyboard() == mSymbolsShiftedKeyboard;
+    }
+    private boolean isSymbolEnglishKeyboardCurrent()
+    {
+        return mInputView.getKeyboard() == mSymbolsEnKeyboard || mInputView.getKeyboard() == mSymbolsEnShiftedKeyboard;
+    }
+
+    private boolean isClickedHangulModeAsQwerty(int primaryCode)
+    {
+        return (mInputView.getKeyboard() == mQwertyKeyboard && primaryCode == Keyboard.KEYCODE_MODE_CHANGE);
+    }
+    private boolean isClickedHangulModeAsSymbol(int primaryCode)
+    {
+        return ((mInputView.getKeyboard() == mSymbolsKeyboard || mInputView.getKeyboard() == mSymbolsShiftedKeyboard)
+                && primaryCode == Keyboard.KEYCODE_MODE_CHANGE);
+    }
+    private boolean isClickedSymbolModeAsHangul(int primaryCode)
+    {
+        return ((mInputView.getKeyboard() == mHangulKeyboard || mInputView.getKeyboard() == mHangulShiftedKeyboard)
+                && primaryCode == CODE_SYMBOL_KEYBOARD);
+    }
+    private boolean isClickedSymbolModeAsEnglish(int primaryCode)
+    {
+        return (mInputView.getKeyboard() == mQwertyKeyboard&& primaryCode == CODE_SYMBOL_KEYBOARD);
+    }
+    private boolean isClickedQwertyModeAsHangul(int primaryCode)
+    {
+        return ((mInputView.getKeyboard() == mHangulKeyboard || mInputView.getKeyboard() == mHangulShiftedKeyboard)
+                && primaryCode == Keyboard.KEYCODE_MODE_CHANGE);
+    }
 
     private PopupWindow mDropdown;
     private String focusOldWordbyPopup; // old word 식별 (mOnPopclick2를 위함)
@@ -884,139 +916,160 @@ public class SoftKeyboard extends InputMethodService
         }
     }
 
-    // Implementation of KeyboardViewListener
-    //onKey 리스너////////////////////////////////////////////////여기부터
+    //onKey 리스너
     public void onKey(int primaryCode, int[] keyCodes) {
         Log.i("Hangul", "onKey PrimaryCode[" + Integer.toString(primaryCode)+"]");
 
         //wordSeparator(\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;)인 경우
         if (isWordSeparator(primaryCode)) {
-            // Handle separator
-            Keyboard currentKeyboard = mInputView.getKeyboard();
-
-            if (mComposing.length() > 0) {
-                commitTyped(getCurrentInputConnection());
-            }
-            if (currentKeyboard == mHangulKeyboard || currentKeyboard == mHangulShiftedKeyboard ) {
-                clearHangul();
-                sendKey(primaryCode);
-            }
-            else {
-                sendKey(primaryCode);
-            }
-            updateShiftKeyState(getCurrentInputEditorInfo());
-            //자동 오타수정 및 띄어쓰기
-            //서버 데이터 전송 과부하를 막기 위한 delay 삽입
-            delaySendForAutoFunction();
-        } else if (primaryCode == Keyboard.KEYCODE_DELETE) {
-            Keyboard currentKeyboard = mInputView.getKeyboard();
-            if (currentKeyboard == mHangulKeyboard || currentKeyboard == mHangulShiftedKeyboard ) {
-                hangulSendKey(-2,HCURSOR_NONE);
-            }
-            else {
-                handleBackspace();
-            }
-        } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
-            handleShift();
-        } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
+            processWordSeparatorCase(primaryCode);
+        }
+        else if(primaryCode == Keyboard.KEYCODE_CANCEL){
             handleClose();
             return;
         }
-        else if ((primaryCode == Keyboard.KEYCODE_MODE_CHANGE || primaryCode == CODE_SYMBOL_KEYBOARD)
-                && mInputView != null) {
-            Keyboard currentKeyboard = mInputView.getKeyboard();
-            if (currentKeyboard == mSymbolsEnKeyboard || currentKeyboard == mSymbolsEnShiftedKeyboard) {
-                currentKeyboard = mQwertyKeyboard;
-            }
-            // Hangul Start Code
-            else if ((currentKeyboard == mQwertyKeyboard && primaryCode == Keyboard.KEYCODE_MODE_CHANGE)
-                    || currentKeyboard == mSymbolsKeyboard || currentKeyboard == mSymbolsShiftedKeyboard) {
-                if (mComposing.length() > 0) {
-                    commitTyped(getCurrentInputConnection());
-                }
-                Log.d("dz","2");
-                clearHangul();
-                currentKeyboard = mHangulKeyboard;
-            }
-            else if(currentKeyboard == mQwertyKeyboard && primaryCode == CODE_SYMBOL_KEYBOARD){
-                if (mComposing.length() > 0) {
-                    commitTyped(getCurrentInputConnection());
-                }
-                currentKeyboard = mSymbolsEnKeyboard;
-            }
-            // Hangul End Code
-            else if (currentKeyboard == mHangulKeyboard || currentKeyboard == mHangulShiftedKeyboard) {
-                if (mComposing.length() > 0) {
-                    getCurrentInputConnection().commitText(mComposing, 1);//mComposing.length());
-                    mComposing.setLength(0);
-                }
-                if(primaryCode == Keyboard.KEYCODE_MODE_CHANGE)
-                    currentKeyboard = mQwertyKeyboard;
-                else
-                    currentKeyboard = mSymbolsKeyboard;
-            }
-            else {
-                if (mComposing.length() > 0) {
-                    getCurrentInputConnection().commitText(mComposing, 1);//mComposing.length());
-                    mComposing.setLength(0);
-                }
-                Log.d("dz","1");
-                clearHangul();
-                currentKeyboard = mSymbolsKeyboard;
-            }
-            mInputView.setKeyboard(currentKeyboard);
-            if (currentKeyboard == mSymbolsKeyboard || currentKeyboard == mSymbolsEnKeyboard || currentKeyboard == mHangulKeyboard || currentKeyboard == mQwertyKeyboard) {
-                currentKeyboard.setShifted(false);
-            }
+        else if(isModeChangeKey(primaryCode)){
+            processModeChangeCase(primaryCode);
+        }
+        else if(isHardKey(primaryCode)){
+            processHardKeyCase(primaryCode);
+        }
+        //일반 문자의 경우
+        else {
+            processTextCase(primaryCode, keyCodes);
+        }
 
-            mCurrentKeyboard = mInputView.getKeyboard();
+        if(mComposing.length()>0) {
+            updateCompletionWordAsComposing();
+            updateCompletionButtons();// 후보자 추천 설정
         }
-        //키보드 옵션 클릭
-        else if(primaryCode == CODE_OPTION_VIEW) {
-            Keyboard currentKeyboard = mInputView.getKeyboard();
-            Log.d("what?","good");
-            if(currentKeyboard != mOptionKeyboard) {
-                if (mComposing.length() > 0) {
-                    getCurrentInputConnection().commitText(mComposing, 1);//mComposing.length());
-                    mComposing.setLength(0);
+//        Log.d("current keyboard",mInputView.getKeyboard().toString());
+    }
+
+    private void processWordSeparatorCase(int primaryCode){
+
+        if (mComposing.length() > 0) {
+            commitTyped(getCurrentInputConnection());
+        }
+        if (isHangulKeyboardCurrent()) {
+            clearHangul();
+        }
+
+        sendKey(primaryCode);
+        updateShiftKeyState(getCurrentInputEditorInfo());
+        //서버 데이터 전송 과부하를 막기 위한 delay 삽입
+        delaySendForAutoFunction();
+    }
+
+    private void processHardKeyCase(int primaryCode){
+        Keyboard currentKeyboard = mInputView.getKeyboard();
+        switch(primaryCode)
+        {
+            case Keyboard.KEYCODE_DELETE:
+                if (isHangulKeyboardCurrent()) {
+                    hangulSendKey(-2,HCURSOR_NONE);
                 }
-                clearHangul();
-                mCurrentKeyboard = currentKeyboard;
-                currentKeyboard = mOptionKeyboard;
-                mInputView.setKeyboard(currentKeyboard);
-                mInputView.getKeyboard().getKeys().get(0).on = isAutoCorrect;
-                mInputView.getKeyboard().getKeys().get(1).on = isAutoSpacing;
-            }
-            else {
-                currentKeyboard = mCurrentKeyboard;
-                mInputView.setKeyboard(currentKeyboard);
-            }
+                else {
+                    handleBackspace();
+                }
+                break;
+            case Keyboard.KEYCODE_SHIFT:
+                handleShift();
+                break;
+            case CODE_OPTION_VIEW:
+                if(currentKeyboard != mOptionKeyboard) {
+                    if (mComposing.length() > 0) {
+                        getCurrentInputConnection().commitText(mComposing, 1);//mComposing.length());
+                        mComposing.setLength(0);
+                    }
+                    clearHangul();
+                    //mCurrentKeyboard = currentKeyboard;
+                    //currentKeyboard = mOptionKeyboard;
+                    mInputView.setKeyboard(mOptionKeyboard);
+                    mInputView.getKeyboard().getKeys().get(0).on = isAutoCorrect;
+                    mInputView.getKeyboard().getKeys().get(1).on = isAutoSpacing;
+                }
+                else {
+                    //currentKeyboard = mCurrentKeyboard;
+                    mInputView.setKeyboard(mCurrentKeyboard);
+                }
+                break;
+            case CODE_AUTO_CORRECTION:
+                isAutoCorrect = !isAutoCorrect;
+                break;
+            case CODE_AUTO_SPACING:
+                isAutoSpacing = !isAutoSpacing;
+                break;
         }
-        else if(primaryCode == CODE_AUTO_CORRECTION)
-        {
-            isAutoCorrect = !isAutoCorrect;
+    }
+
+    private boolean isHardKey(int primaryCode){
+        switch (primaryCode){
+            case Keyboard.KEYCODE_DELETE:
+            case Keyboard.KEYCODE_SHIFT:
+            case CODE_OPTION_VIEW:
+            case CODE_AUTO_CORRECTION:
+            case CODE_AUTO_SPACING:
+                return true;
+            default:
+                return false;
         }
-        else if(primaryCode == CODE_AUTO_SPACING)
-        {
-            isAutoSpacing = !isAutoSpacing;
+    }
+
+    private void processModeChangeCase(int primaryCode){
+        Keyboard currentKeyboard = mInputView.getKeyboard();
+        if (isSymbolEnglishKeyboardCurrent()) {
+            currentKeyboard = mQwertyKeyboard;
+        }
+        // Hangul Start Code
+        else if (isClickedHangulModeAsQwerty(primaryCode) || isSymbolHangulKeyboardCurrent()) {
+//            if (mComposing.length() > 0) {
+//                commitTyped(getCurrentInputConnection());
+//            }
+//            clearHangul();
+            currentKeyboard = mHangulKeyboard;
+        }
+        else if(isClickedSymbolModeAsEnglish(primaryCode)){
+//            if (mComposing.length() > 0) {
+//                commitTyped(getCurrentInputConnection());
+//            }
+            currentKeyboard = mSymbolsEnKeyboard;
+        }
+        //now hangulKeyboard
+        else{
+            if (mComposing.length() > 0) {
+                getCurrentInputConnection().commitText(mComposing, 1);//mComposing.length());
+                mComposing.setLength(0);
+            }
+            clearHangul();
+
+            if(isClickedQwertyModeAsHangul(primaryCode))
+                currentKeyboard = mQwertyKeyboard;
+            else
+                currentKeyboard = mSymbolsKeyboard;
+        }
+        mInputView.setKeyboard(currentKeyboard);
+//        if (currentKeyboard == mSymbolsKeyboard || currentKeyboard == mSymbolsEnKeyboard || currentKeyboard == mHangulKeyboard || currentKeyboard == mQwertyKeyboard) {
+            currentKeyboard.setShifted(false);
+//        }
+
+        mCurrentKeyboard = mInputView.getKeyboard();
+    }
+
+    private boolean isModeChangeKey(int primaryCode){
+        return (primaryCode == Keyboard.KEYCODE_MODE_CHANGE || primaryCode == CODE_SYMBOL_KEYBOARD);
+    }
+
+    private void processTextCase(int primaryCode, int[] keyCodes){
+        // Hangul Start Code
+        if (isHangulKeyboardCurrent()) {
+            handleHangul(primaryCode, keyCodes);
         }
         else {
-
-            // Hangul Start Code
-            Keyboard currentKeyboard = mInputView.getKeyboard();
-            if (currentKeyboard == mHangulKeyboard || currentKeyboard == mHangulShiftedKeyboard) {
-                handleHangul(primaryCode, keyCodes);
-            }
-            else {
-                handleCharacter(primaryCode, keyCodes);
-            }
-            // Hangul End Code
-            delaySendForAutoFunction();
+            handleCharacter(primaryCode, keyCodes);
         }
-        if(mComposing.length()>0)
-            updateCompletionWordAsComposing();
-        updateCompletionButtons();// 후보자 추천 설정
-        Log.d("current keyboard",mInputView.getKeyboard().toString());
+        // Hangul End Code
+        delaySendForAutoFunction();
     }
 
     //자동 오타수정 및 띄어쓰기
@@ -1072,6 +1125,7 @@ public class SoftKeyboard extends InputMethodService
 //        }
 //    }
 
+    //예제코드
     private void handleBackspace() {
         final int length = mComposing.length();
         if (length > 1) {
@@ -1089,6 +1143,7 @@ public class SoftKeyboard extends InputMethodService
         updateShiftKeyState(getCurrentInputEditorInfo());
     }
 
+    //예제 코드
     private void handleShift() {
         if (mInputView == null) {
             return;
@@ -1135,7 +1190,7 @@ public class SoftKeyboard extends InputMethodService
     }
 
 // Hangul Code Start
-    //수정x
+    //예제코드
     private int isHangulKey(int stack_pos, int new_key) {
         if (stack_pos != 2) {
             switch (mHangulKeyStack[stack_pos]) {
@@ -1232,6 +1287,7 @@ public class SoftKeyboard extends InputMethodService
         return;
     }
 
+    //예제코드
     private void hangulSendKey(int newHangulChar, int hCursor) {
 
         if (hCursor == HCURSOR_NEW) {
@@ -1375,6 +1431,7 @@ public class SoftKeyboard extends InputMethodService
         }
     }
 
+    //예제코드
     private void handleHangul(int primaryCode, int[] keyCodes) {
 
         int hangulKeyIdx = -1;
@@ -1780,6 +1837,7 @@ public class SoftKeyboard extends InputMethodService
     }
 // Hangul Code End    
 
+    //예제코드
     private void handleCharacter(int primaryCode, int[] keyCodes) {
         if (isInputViewShown()) {
             if (mInputView.isShifted()) {
@@ -1796,12 +1854,14 @@ public class SoftKeyboard extends InputMethodService
         }
     }
 
+    //예제코드
     private void handleClose() {
         commitTyped(getCurrentInputConnection());
         requestHideSelf(0);
         mInputView.closing();
     }
 
+    //예제코드
     private void checkToggleCapsLock() {
         long now = System.currentTimeMillis();
         if (mLastShiftTime + 800 > now) {
@@ -1882,11 +1942,11 @@ public class SoftKeyboard extends InputMethodService
         String msg = "{\"request\":[\"";
         if(isSpacing)
             msg += "spacing\"";
-        if(isModified) {
-            if(isSpacing)
-                msg += ",";
+        if(isModified)
+//            if(isSpacing)
+//                msg += ",";
             msg += "modified\"";
-        }
+
         msg += "]";
         if(isSpacing) {
             msg += ",\"spacingData\":\"" + spacingData + "\"";
@@ -1924,7 +1984,7 @@ public class SoftKeyboard extends InputMethodService
     }
 
     private void processJsonMessege(Message msg){
-        JSONObject obj;
+        JSONObject jsonObject;
         JSONArray responseType;
         JSONArray correctionList;
         InputConnection ic;
@@ -1935,62 +1995,59 @@ public class SoftKeyboard extends InputMethodService
         Log.d("Receive Data : ", msg.obj.toString());
         try {
             ic = getCurrentInputConnection();
-            obj = new JSONObject((String) msg.obj);
+            jsonObject = new JSONObject((String) msg.obj);
 //            obj = new JSONObject("{\"response\" : [\"modified\"],\"modified\" : {\"나는\" : [\"0\",\"ㅋㅋ\"],\"김정민\" : [\"1\",\"ㅎㅎ\"]}}");
-            //Log.d("닿?","나?");
-            responseType = (JSONArray) obj.getJSONArray("response");
-            //responseType 별로 처리
-            for(int i=0; i < responseType.length(); i++)
+            responseType = (JSONArray) jsonObject.getJSONArray("response");
+
+            //자동 띄어쓰기 일 경우
+            if(responseType.getString(0).equals("spacing"))
             {
-                //자동 띄어쓰기 일 경우
-                if(responseType.getString(i).equals("spacing"))
-                {
-                    spacingData = obj.getString("spacing");
-                    ic.finishComposingText();
-                    //isCommitted = true;
-                    //-*-띄어쓰기 문제 있을시 deleteSurrounding을 주석처리하고 아래 세 줄 주석해제 할것.
-//                            int oldTextNum = ic.getExtractedText(new ExtractedTextRequest(), 0).text.length();
-//                            ic.setSelection(oldTextNum, oldTextNum);
-//                            ic.deleteSurroundingText(oldTextNum,0);
-                    ic.deleteSurroundingText(MAX_TEXT,MAX_TEXT);
-                    ic.commitText(spacingData,1);
-                }
+                spacingData = jsonObject.getString("spacing");
+                ic.finishComposingText();
+                //isCommitted = true;
+                //-*-띄어쓰기 문제 있을시 deleteSurrounding을 주석처리하고 아래 세 줄 주석해제 할것.
+//                        int oldTextNum = ic.getExtractedText(new ExtractedTextRequest(), 0).text.length();
+//                        ic.setSelection(oldTextNum, oldTextNum);
+//                        ic.deleteSurroundingText(oldTextNum,0);
+                ic.deleteSurroundingText(MAX_TEXT,MAX_TEXT);
+                ic.commitText(spacingData,1);
+            }
 
-                //오타 수정의 경우
-                else if(responseType.getString(i).equals("modified"))
-                {
-                    correctionButtonInformList.clear();
+            //오타 수정의 경우
+            else if(responseType.getString(0).equals("modified"))
+            {
+                correctionButtonInformList.clear();
 
-                    if(!obj.getString("modified").equals("noData")) {
-                        modifiedData = obj.getJSONObject("modified");
-                        Iterator<String> correctionKeys = modifiedData.keys();
+                if(!jsonObject.getString("modified").equals("noData")) {
+                    modifiedData = jsonObject.getJSONObject("modified");
+                    Iterator<String> correctionKeys = modifiedData.keys();
 
-                        while (correctionKeys.hasNext()){
-                            String oldWord = correctionKeys.next();
-                            String[] correctionWordTmp;
+                    while (correctionKeys.hasNext()){
+                        String oldWord = correctionKeys.next();
+                        String[] correctionWordTmp;
 
-                            correctionList = modifiedData.getJSONArray(oldWord);
+                        correctionList = modifiedData.getJSONArray(oldWord);
 
-                            int index = 1;
-                            correctionWordTmp = new String[correctionList.length()-1];
-                            while(index < correctionList.length())
-                            {
-                                correctionWordTmp[index-1] = correctionList.getString(index++);
-                            }
+                        int index = 1;
+                        correctionWordTmp = new String[correctionList.length()-1];
+                        while(index < correctionList.length())
+                        {
+                            correctionWordTmp[index-1] = correctionList.getString(index++);
+                        }
 
-                            //오타 검사 단어와 오타 단어가 같을 경우 제외
-                            if(!oldWord.equals(correctionWordTmp[0])) {
-                                correctionButtonInformList.add(new correctionButtonInform(
-                                        oldWord,
-                                        correctionWordTmp[0]));
-                            }
+                        //오타 검사 단어와 오타 단어가 같을 경우 제외
+                        if(!oldWord.equals(correctionWordTmp[0])) {
+                            correctionButtonInformList.add(new correctionButtonInform(
+                                    oldWord,
+                                    correctionWordTmp[0]));
                         }
                     }
-
-                    //오타 수정 버튼 텍스트 갱신
-                    renewCorrectionButtonsAsCorrectionButtonInformList();
                 }
+
+                //오타 수정 버튼 텍스트 갱신
+                renewCorrectionButtonsAsCorrectionButtonInformList();
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -2091,7 +2148,7 @@ public class SoftKeyboard extends InputMethodService
 
     private boolean isCursorRightmost(InputConnection ic)
     {
-        Log.d("completeIC", "!" + ic.getTextAfterCursor(1,0).toString() + "?");
+//        Log.d("completeIC", "!" + ic.getTextAfterCursor(1,0).toString() + "?");
         return (ic.getTextAfterCursor(1,0) == null ||
                 ic.getTextAfterCursor(1,0).toString().equals("") ||
                 ic.getTextAfterCursor(1,0).toString().length() <= 0);
@@ -2162,9 +2219,6 @@ public class SoftKeyboard extends InputMethodService
     }
 
     boolean isBlurredText(int startCursor, int finishCursor){
-        if(startCursor<finishCursor && getCurrentInputConnection().getSelectedText(0)!=null)
-            return true;
-        else
-            return false;
+        return (startCursor<finishCursor && getCurrentInputConnection().getSelectedText(0)!=null);
     }
 }
