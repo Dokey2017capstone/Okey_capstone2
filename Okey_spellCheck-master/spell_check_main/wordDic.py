@@ -12,7 +12,11 @@ import operator
 import json
 
 count = 0
-file_location = 'C:/Users/kimhyeji/Desktop/데이터'
+
+#현재 wordDic.py가 있는 폴더의 경로로부터 데이터 파일의 경로를 가져온다
+current_location = os.getcwd()
+file_location = current_location + '/data'
+
 #directory 에 있는 file의 제목을 모두 가져온다.
 directory = os.listdir(file_location)
 
@@ -20,16 +24,21 @@ directory = os.listdir(file_location)
 os.chdir(file_location)
 
 dic = {}
-print(len(directory))
-for f in directory:
-    #확장자
-    extension = f.split('.')[-1]
 
-    if extension == 'json':
-        json_data = open(f).read()
-        data = json.loads(json_data)
-    elif extension == 'csv':
-        pass
+def read_word_from_file(file):
+    hangul = re.compile('[가-힣]+')
+    for line in file:
+        result = hangul.findall(line)
+        if (len(result) > 6): continue
+        for word in result:
+            if word in dic.keys():
+                dic[word] += 1
+            else:
+                dic[word] = 1
+
+for f in directory:
+
+    extension = f.split('.')[-1]
 
     #python3부터는 ANSI 기준 작성 파일만 읽을 수 있다.
     #인코딩 문제를 위해 utf-16을 명시해준다.
@@ -38,49 +47,18 @@ for f in directory:
         print(f)
         with open(f, "r", encoding = 'utf16') as file:
             #한글 단어만 추출한다
-            count += 1
-            hangul = re.compile('[가-힣]+')
-            for line in file:
-                result = hangul.findall(line)
-                if(len(result) > 6): continue
-                for word in result:
-                    if word in dic.keys():
-                        dic[word] += 1
-                    else:
-                        dic[word] = 1
+            read_word_from_file(file)
     except:
         try:
             print(f)
             with open(f, "r", encoding='utf8') as file:
                 # 한글 단어만 추출한다
-                count += 1
-
-                hangul = re.compile('[가-힣]+')
-                for line in file:
-                    result = hangul.findall(line)
-                    if (len(result) > 5): continue
-
-                    for word in result:
-                        if word in dic.keys():
-                            dic[word] += 1
-                        else:
-                            dic[word] = 1
+                read_word_from_file(file)
         except:
             try:
                 with open(f, "r", encoding='cp949') as file:
                     # 한글 단어만 추출한다
-                    count += 1
-
-                    hangul = re.compile('[가-힣]+')
-                    for line in file:
-                        result = hangul.findall(line)
-                        if (len(result) > 5): continue
-
-                        for word in result:
-                            if word in dic.keys():
-                                dic[word] += 1
-                            else:
-                                dic[word] = 1
+                    read_word_from_file(file)
             except:
                 print(f)
                 print("error")
@@ -107,4 +85,5 @@ except:
         for key,value in dic.items():
             if(value > 100):
                 w.writerow(key)
+
 
