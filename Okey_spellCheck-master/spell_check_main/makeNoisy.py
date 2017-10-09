@@ -23,8 +23,9 @@ import os
 import hangul as hg
 
 # 파일 위치
-word_list_dir = 'C:/Users/kimhyeji/Desktop/데이터'
-save_file = 'C:/Users/kimhyeji/PycharmProjects/tfTest/dic_modify_.csv'
+current_location = os.getcwd()
+word_list_dir = current_location + '/data'
+save_file = current_location + 'data/dic_modify_.csv'
 
 
 #한글 음소 분할을 위한 변수 설정
@@ -171,8 +172,6 @@ def make_noisy(w):
             error_split= split_list[0:n] + split_list[n+1:]
             error_word = m.combine_word(error_split)
 
-            #while (len(error_word) > len(target_word)):
-            #    target_word = target_word[0:i] + '0' + target_word[i:]
             error_word_list.append(error_word)
             target_word_list.append(target_word)
 
@@ -183,8 +182,6 @@ def make_noisy(w):
                 if(n != 0): error_split= split_list[0:n-1] + list(split_list[n]) + list(split_list[n-1]) + split_list[n+1:]
                 error_word = m.combine_word(error_split)
 
-                #while(len(error_word) > len(target_word)):
-                #    target_word = target_word[0:i] + '0' + target_word[i:]
                 error_word_list.append(error_word)
                 target_word_list.append(target_word)
 
@@ -195,8 +192,6 @@ def make_noisy(w):
                 error_split= split_list[0:n] + list(near_key) + split_list[n + 1:]
                 error_word = m.combine_word(error_split)
 
-                #while(len(error_word) > len(target_word)):
-                #    target_word = target_word[0:i] + '0' + target_word[i:]
                 error_word_list.append(error_word)
                 target_word_list.append(target_word)
             #추가
@@ -207,9 +202,6 @@ def make_noisy(w):
                 else:
                     error_split= split_list[0:n+1] + list(near_key) + split_list[n+1:]
                 error_word = m.combine_word(error_split)
-
-                #while(len(error_word) > len(target_word)):
-                #    target_word = target_word[0:i] + '0' + target_word[i:]
 
                 error_word_list.append(error_word)
                 target_word_list.append(target_word)
