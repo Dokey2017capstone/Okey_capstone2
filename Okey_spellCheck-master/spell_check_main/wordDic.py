@@ -28,6 +28,7 @@ dic = {}
 def read_word_from_file(file):
     hangul = re.compile('[가-힣]+')
     for line in file:
+        line.decode('utf8')
         result = hangul.findall(line)
         if (len(result) > 6): continue
         for word in result:
@@ -40,29 +41,13 @@ for f in directory:
 
     extension = f.split('.')[-1]
 
-    #python3부터는 ANSI 기준 작성 파일만 읽을 수 있다.
-    #인코딩 문제를 위해 utf-16을 명시해준다.
-    #윈도우즈에서의 text파일의 유니코드가 UTF-16이기 때문이다.
     try:
-        print(f)
-        with open(f, "r", encoding = 'utf16') as file:
-            #한글 단어만 추출한다
-            read_word_from_file(file)
+        file = open(f, "r")
+        read_word_from_file(file)
+
     except:
-        try:
-            print(f)
-            with open(f, "r", encoding='utf8') as file:
-                # 한글 단어만 추출한다
-                read_word_from_file(file)
-        except:
-            try:
-                with open(f, "r", encoding='cp949') as file:
-                    # 한글 단어만 추출한다
-                    read_word_from_file(file)
-            except:
-                print(f)
-                print("error")
-                continue
+        print(f, " opening error")
+        continue
 
 try:
     #빈도 수를 값에 따라서 내림차순으로 정렬하고, 리스트로 반환한다.
