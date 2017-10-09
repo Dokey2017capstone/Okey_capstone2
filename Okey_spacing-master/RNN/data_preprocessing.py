@@ -8,12 +8,13 @@ def tag_function(sentence):     #태그함수
         if i == 0:
             string += sentence[i]
             tag+='1 '
-        elif sentence[i] != ' ' and sentence[i - 1] == ' ':  # 첫 음절일때
-            string += sentence[i]
-            tag+='1 '
-        elif sentence[i] != ' ' and sentence[i - 1] != ' ':  # 아닐 때
-            string += sentence[i]
-            tag+='0 '
+        elif sentence[i] != ' ':
+            if sentence[i - 1] == ' ':
+                string += sentence[i]
+                tag += '1 '
+            else:
+                string += sentence[i]
+                tag += '0 '
 
     return string,tag
 
