@@ -3,12 +3,11 @@ import csv
 
 def tag_function(sentence):     #태그함수
     string=':'      #csv입력시 오류방지
-    tag=''
-    for i in range(len(sentence)):
-        if i == 0:
-            string += sentence[i]
-            tag+='1 '
-        elif sentence[i] != ' ':
+    tag='1 '
+    string+=sentence[0]
+
+    for i in range(1,len(sentence)):
+        if sentence[i] != ' ':
             if sentence[i - 1] == ' ':
                 string += sentence[i]
                 tag += '1 '
