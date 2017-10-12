@@ -1,7 +1,3 @@
-#import time
-
-#start = time.time()
-
 # 이 프로그램은 분해된 자소를 한글 두벌 키보드 입력에 따라 합치는 프로그램이다.
 # 입력값 예시 ['ㄱ','ㅏ','ㅇ','ㄹ','ㄱ','ㅏ']
 # 출력값 예시 '강ㄹ가'
@@ -274,5 +270,3 @@ def combine_word(word):
     m.__main__()
     return m.result
 
-#print(combine_word(['ㄱ', 'ㅡ']))
-#print(time.time()-start)

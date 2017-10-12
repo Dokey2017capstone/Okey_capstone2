@@ -289,5 +289,4 @@ def make_train_data():
 
 
 #학습 시 , 반드시 주석처리해주어야함
-#반! 드! 시
 make_train_data()

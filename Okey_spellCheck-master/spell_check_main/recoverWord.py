@@ -41,14 +41,3 @@ def convert_num(word):
         error.append(dic_word[i])
 
     return error
-
-"""
-print(recover_word([4,9488,192,0,0,0,0]))
-print(recover_word([   0, 1256 , 192 ,   0]))
-print(convert_num("한글"))
-
-
-#실행시간
-end = time.time()
-print(end-start)
-"""

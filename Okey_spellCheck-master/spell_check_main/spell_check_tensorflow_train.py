@@ -299,8 +299,6 @@ class Seq2SeqModel():
 
         grads, _ = tf.clip_by_global_norm(tf.gradients(self.loss, tvars), config.max_grad_norm)
 
-        #optimizer = tf.train.AdamOptimizer(self.lr)
-        #self.train_op = optimizer.apply_gradients(zip(grads, tvars))
         self.train_op = tf.train.AdamOptimizer().minimize(self.loss)
 
         ###학습속도 설정
@@ -405,7 +403,6 @@ def train_on_copy_task_(session, model,
                     for i, (e_in, d_ot, dt_inf) in enumerate(zip(
                             fd[model.encoder_inputs].T,
                             fd[model.decoder_targets].T,
-                            #session.run(model.decoder_prediction_train, fd).T,
                             session.run(model.decoder_prediction_inference, fd).T
                     )):
 
@@ -425,10 +422,6 @@ def train_on_copy_task_(session, model,
         #1에폭마다 저장한다.
         saver.save(session, save_dir+'.ckpt', global_step = epoch)
 
-
-        # 학습 속도 조절
-        #lr_decay = config.lr_decay ** max(((epoch + 1) * model.max_batches) + batch - config.epoch, 0.0)
-        #model.assign_lr(session, config.learning_rate * lr_decay)
     return loss_track
 
 
@@ -472,56 +465,3 @@ with tf.Session() as session:
                            initial_step,
                            verbose=True)
 
-
-"""
-
-
-tf.reset_default_graph()
-model = Seq2SeqModel(attention=False,
-                         bidirectional=True)
-
-
-#trie 구조의 단어장
-#단어장 내에 단어가 있는 경우 검사를 하지 않는다.
-word_dir = 'C:/Users/kimhyeji/PycharmProjects/tfTest/trie.json'
-dict = json.load(open(word_dir))
-
-with tf.Session() as session:
-
-    merged = tf.summary.merge_all()
-    writer = tf.summary.FileWriter(graph_dir, session.graph)
-    session.run(tf.global_variables_initializer())
-
-
-    saver = tf.train.Saver(tf.trainable_variables())
-    initial_step = 0
-    ckpt = tf.train.get_checkpoint_state(save_dir)
-
-     #checkpoint가 존재할 경우 변수 값을 복구한다.
-    if ckpt and ckpt.model_checkpoint_path:
-        saver.restore(session, ckpt.model_checkpoint_path)
-        #복구한 시작 지점
-        initial_step = int(ckpt.model_checkpoint_path.rsplit('-', 1)[1])
-        print("Checkpoint")
-        print(initial_step)
-    while(1):
-        #오타 데이터 입력을 받는다.
-        word = input("입력 :")
-        temp = dict
-        result = 1
-        #단어가 존재하지 않는 경우 result = 0
-        for char in word:
-            if char in temp:
-                temp = temp[char]
-            else:
-                result = 0
-                break
-
-        #단어장에 단어가 존재하지 않는 경우
-        if not result:
-            index_word = rW.convert_num(word)
-            fd = model.make_inference_inputs([len(word)], [[i] for i in index_word])
-            inf_out = session.run(model.decoder_prediction_inference, fd).T[0]
-            print(rW.recover_word(inf_out))
-
-"""
