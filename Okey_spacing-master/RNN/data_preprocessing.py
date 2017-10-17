@@ -2,13 +2,14 @@
 import csv
 
 def tag_function(sentence):     #태그함수
+    SPACE_CHARACTER = " "
     string=':'      #csv입력시 오류방지
     tag='1 '
     string+=sentence[0]
 
     for i in range(1,len(sentence)):
-        if sentence[i] != ' ':
-            if sentence[i - 1] == ' ':
+        if sentence[i] != SPACE_CHARACTER:
+            if sentence[i - 1] == SPACE_CHARACTER:
                 string += sentence[i]
                 tag += '1 '
             else:
