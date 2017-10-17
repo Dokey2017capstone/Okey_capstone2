@@ -11,10 +11,10 @@ def tag_function(sentence):     #태그함수
         if sentence[i] != SPACE_CHARACTER:
             if sentence[i - 1] == SPACE_CHARACTER:
                 string += sentence[i]
-                tag += '1 '
+                tag += ('1'+SPACE_CHARACTER)
             else:
                 string += sentence[i]
-                tag += '0 '
+                tag += ('0'+SPACE_CHARACTER)
 
     return string,tag
 
