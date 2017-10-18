@@ -5,6 +5,10 @@ def tag_function(sentence):     #태그함수
     SPACE_CHARACTER = " "
     string=':'      #csv입력시 오류방지
     tag='1 '
+
+    if len(sentence)==0:
+        return string,SPACE_CHARACTER
+
     string+=sentence[0]
 
     for i in range(1,len(sentence)):
