@@ -25,29 +25,30 @@ os.chdir(file_location)
 
 dic = {}
 
-def read_word_from_file(file):
-    hangul = re.compile('[가-힣]+')
-    for line in file:
-        line.decode('utf8')
-        result = hangul.findall(line)
-        if (len(result) > 6): continue
-        for word in result:
-            if word in dic.keys():
-                dic[word] += 1
-            else:
-                dic[word] = 1
-
 for f in directory:
 
     extension = f.split('.')[-1]
+    encodings = ['utf8', 'utf16', 'cp949']
+    for encoding in encodings:
+        try:
+            with open(f, "r", encoding=encoding) as file:
+                hangul = re.compile('[가-힣]+')
+                for line in file:
+                    result = hangul.findall(line)
+                    # 거의 모든 경우 단어의 길이가 6 이하이므로 단어의 길이가 6이상인 경우 오류로 판단하여 예외처리해준다
+                    if (len(result) > 6): continue
+                    for word in result:
+                        if word in dic.keys():
+                            dic[word] += 1
+                        else:
+                            dic[word] = 1
+                break
+        except:
+            if encoding == encodings[-1]:
+                print(f + "opening error")
+                continue
 
-    try:
-        file = open(f, "r")
-        read_word_from_file(file)
 
-    except:
-        print(f, " opening error")
-        continue
 
 try:
     #빈도 수를 값에 따라서 내림차순으로 정렬하고, 리스트로 반환한다.
