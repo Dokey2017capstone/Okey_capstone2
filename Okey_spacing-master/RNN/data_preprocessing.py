@@ -2,18 +2,23 @@
 import csv
 
 def tag_function(sentence):     #태그함수
+    SPACE_CHARACTER = " "
     string=':'      #csv입력시 오류방지
-    tag=''
-    for i in range(len(sentence)):
-        if i == 0:
-            string += sentence[i]
-            tag+='1 '
-        elif sentence[i] != ' ' and sentence[i - 1] == ' ':  # 첫 음절일때
-            string += sentence[i]
-            tag+='1 '
-        elif sentence[i] != ' ' and sentence[i - 1] != ' ':  # 아닐 때
-            string += sentence[i]
-            tag+='0 '
+    tag='1 '
+
+    if len(sentence)==0:
+        return string,SPACE_CHARACTER
+
+    string+=sentence[0]
+
+    for i in range(1,len(sentence)):
+        if sentence[i] != SPACE_CHARACTER:
+            if sentence[i - 1] == SPACE_CHARACTER:
+                string += sentence[i]
+                tag += ('1'+SPACE_CHARACTER)
+            else:
+                string += sentence[i]
+                tag += ('0'+SPACE_CHARACTER)
 
     return string,tag
 

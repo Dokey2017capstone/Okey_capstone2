@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 import csv
 
-def string2vec(string):  #한글 벡터화
+def string_one_hot(string):  #한글 벡터화
     x_data = []
 
     for j in string:
@@ -73,7 +73,7 @@ saver.restore(sess, "./ckpt/my-model-14")
 while True:
     string = input()
     string = string.replace(' ','')      #공백제거
-    x_vec = string2vec(string)
+    x_vec = string_one_hot(string)
     y_result = sess.run(prediction, feed_dict={X: x_vec, length:len(string)})
     result = spacing_result_function([string], y_result)
     print(result)
