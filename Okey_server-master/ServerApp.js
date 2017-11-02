@@ -49,15 +49,17 @@ var server = net.createServer(function(client) { //TCP 소켓 서버 생성(net.
 			pyShell.send('2' + jsonData.spacingData);
 			isModify = false;
 			isSpace = true;
-			writeData(client);
+			
 		}
 		else if(jsonData.request[0] == "modified") {
 			pyShell.send('1'+jsonData.modifiedData.trim());
 			modiData = jsonData.modifiedData.trim();
 			isModify = true;
 			isSpace = false;
-			writeData(client);
-		}     
+			
+		}  
+		
+		writeData(client);
 	});
 
 	client.on('end', function() { //소켓 종료 처리
@@ -73,10 +75,10 @@ var server = net.createServer(function(client) { //TCP 소켓 서버 생성(net.
 	});
 });
 
-server.listen(8100, function() { //8100 포트로 연결 수신
+server.listen(8100, function() { 
 	console.log('Server listening: ' + JSON.stringify(server.address()));
 
-	server.on('close', function(){//Server와 연결된 소켓을 닫음
+	server.on('close', function(){
 		console.log('Server Terminated');
 	});
 	server.on('error', function(err){
@@ -88,14 +90,16 @@ function writeData(client){
 	pyShell.on('message', function(message) {
 		if(isSpace) {
 			var resultResponse = responseStr + '"spacing"' + '], "spacing" : "' + message  + '"}\n\f\n';
-			if(!count) {
+			
+			if(count!=0) {
 				count++;
 				console.log('spacing end : ' + message);
 				console.log(resultResponse);
 			}
-			client.write(resultResponse);
+	
 		}
-		if(isModify) {
+		else if(isModify) {
+			
 			var modiAry = modiData.split(' ');
 			var resultAry = message.split(',');
 			resultJson = '"modified" : {'
@@ -104,15 +108,18 @@ function writeData(client){
 
 				resultJson += ('"' + modiAry[i] + '" : [ "' + i + '", "' + resultAry[i] +'"]');
 			}
+			
 			resultJson += '}';
 			var resultResponse = responseStr + '"modified"' + '], ' + resultJson  + '}\n\f\n';
-			if(!count) {
+			
+			if(count!=0) {
 				console.log('modifying end : ' + message);
 				count++;
 				console.log(resultResponse);
 			}
-			client.write(resultResponse);
+		
 		}
+			client.write(resultResponse);
 	});
 	count = 0;
 }
