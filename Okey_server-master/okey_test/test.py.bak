@@ -6,12 +6,14 @@ import recoverWord as rW
 import json
 import sys
 
+
 #path = '/root/Okey_server/okey_test/'
-path = 'C:/Users/user/Downloads/Okey_server/okey_test'
+path = 'C:/Users/user/Downloads/Okey_capstone2/Okey_server-master/okey_test/'
 file_name = path + 'dic_modify_del.csv'
 graph_dir = path + 'tmp/test_logs'
 save_dir = path + 'tmp/checkpoint_dir'
 word_dir = path + 'trie.json'
+
 
 class SmallConfig():
     """
@@ -138,7 +140,7 @@ class Seq2SeqModel():
             PAD_SLICE = tf.ones([1, batch_size], dtype=tf.int32) * self.PAD
 
             #decoder_input= <EOS> + decoder_targets
-            self.decoder_train_inputs = tf.concat([EOS_SLICE, self.decoder_targets], axis=0)
+            self.decoder_train_inputs = tf.concat_v2([EOS_SLICE, self.decoder_targets], axis=0)
             self.decoder_train_length = self.decoder_targets_length+1
 
             self.decoder_train_targets = self.decoder_targets
@@ -216,7 +218,7 @@ class Seq2SeqModel():
                                                 dtype=tf.float32)
                 )
 
-            self.encoder_outputs = tf.concat((encoder_fw_outputs, encoder_bw_outputs), 2)
+            self.encoder_outputs = tf.concat_v2((encoder_fw_outputs, encoder_bw_outputs), 2)
 
             if isinstance(encoder_fw_state, LSTMStateTuple):
                 encoder_state_c = tf.concat(
@@ -231,7 +233,7 @@ class Seq2SeqModel():
                 encoder_fw_state = encoder_fw_state[-1]
                 encoder_bw_state = encoder_bw_state[-1]
 
-                self.encoder_state = tf.concat((encoder_fw_state, encoder_bw_state),1,name='bidirectional_concat')
+                self.encoder_state = tf.concat_v2((encoder_fw_state, encoder_bw_state),1,name='bidirectional_concat')
     def _init_decoder(self):
         """
             decoder cell.
@@ -288,7 +290,7 @@ class Seq2SeqModel():
         targets = tf.transpose(self.decoder_train_targets, [1, 0])
 
         #손실함수
-        self.loss = seq2seq.sequence_loss(logits=logits, targets=targets,
+        self.loss = tf.contrib.legacy_seq2seq.sequence_loss(logits=logits, targets=targets,
                                           weights=self.loss_weights)
 
         #기울기 클리핑

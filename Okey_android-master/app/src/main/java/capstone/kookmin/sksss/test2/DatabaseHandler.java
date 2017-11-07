@@ -71,7 +71,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		String sql = "";
 		sql += "SELECT * FROM " + tableName;
 		sql += " WHERE " + fieldObjectName + " LIKE '" + searchTerm + "%'";
-		sql += " ORDER BY " + fieldObjectId + " DESC";
+		//sql += " ORDER BY " + fieldObjectId + " DESC";
 		sql += " LIMIT 0,5";
 
 		SQLiteDatabase db = this.getWritableDatabase();
