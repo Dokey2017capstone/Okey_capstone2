@@ -37,6 +37,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		sql += fieldObjectName + " TEXT ";
 //		sql += fieldObjectCount + " COUNT ";
 		sql += " ) ";
+		
+		db.execSQL(sql);
+
+		sql = "";
+		sql += "CREATE INDEX idx1 ON " + tableName;
+		sql += " ( ";
+		sql += fieldObjectName;
+		sql += " ) ";
 
 		db.execSQL(sql);
 	}
@@ -60,6 +68,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //			values.put(fieldObjectCount, 0);
 			db.insert(tableName, null, values);
 		}
+
 		db.setTransactionSuccessful();
 		db.endTransaction();
 	}
@@ -69,7 +78,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		List<MyObject> recordsList = new ArrayList<MyObject>();
 
 		String sql = "";
-		sql += "SELECT * FROM " + tableName;
+		sql += "SELECT "+fieldObjectName+" FROM " + tableName;
 		sql += " WHERE " + fieldObjectName + " LIKE '" + searchTerm + "%'";
 		//sql += " ORDER BY " + fieldObjectId + " DESC";
 		sql += " LIMIT 0,5";
@@ -78,7 +87,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery(sql, null);
 		int x = 0;
 
-		if (cursor.moveToFirst()) {
+		if (cursor.moveToFirst()) 
+			{
 			do {
 				// int productId =
 				// Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldProductId)));
