@@ -31,7 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		String sql = "";
 
-		sql += "CREATE TABLE " + tableName;
+		sql += "CREATE TABLE IF NOT EXISTS " + tableName;
 		sql += " ( ";
 		sql += fieldObjectId + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
 		sql += fieldObjectName + " TEXT ";
