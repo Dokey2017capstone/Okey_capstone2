@@ -41,12 +41,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="SoftKeyboard.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SoftKeyboard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22022">
-              <caret line="2218" column="5" selection-start-line="2218" selection-start-column="5" selection-end-line="2218" selection-end-column="5" />
+            <state relative-caret-position="28">
+              <caret line="1980" column="1" selection-start-line="1980" selection-start-column="1" selection-end-line="1980" selection-end-column="1" />
               <folding>
+                <element signature="e#0#90855#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#3104#3128#0" expanded="true" />
                 <element signature="e#4741#4791#0" expanded="true" />
@@ -79,14 +80,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TcpClient.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TcpClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/TcpClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
-              <folding>
-                <element signature="e#4632#4633#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="210">
+              <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1957,9 +1956,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/correctionWordBar.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/correctionwordpopup.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/correctionButtonInform.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/TcpClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/MessegeHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java" />
       </list>
     </option>
   </component>
@@ -2516,6 +2515,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#0#90855#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#3104#3128#0" expanded="true" />
             <element signature="e#4741#4791#0" expanded="true" />
@@ -2747,16 +2747,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/TcpClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
-          <folding>
-            <element signature="e#4632#4633#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/MyObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -2826,9 +2816,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22022">
-          <caret line="2218" column="5" selection-start-line="2218" selection-start-column="5" selection-end-line="2218" selection-end-column="5" />
+        <state relative-caret-position="28">
+          <caret line="1980" column="1" selection-start-line="1980" selection-start-column="1" selection-end-line="1980" selection-end-column="1" />
           <folding>
+            <element signature="e#0#90855#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#3104#3128#0" expanded="true" />
             <element signature="e#4741#4791#0" expanded="true" />
@@ -2844,6 +2835,14 @@
             <element signature="e#79544#79545#0" expanded="true" />
             <element signature="e#79573#79574#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/TcpClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
