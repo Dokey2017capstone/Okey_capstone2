@@ -27,7 +27,7 @@ public class TcpClient implements Runnable {
     private BufferedReader networkReader;
     private BufferedWriter networkWriter;
     String dataFromServer, JsonMessage;
-    private MessegeHandler mHandler;
+    private MessegeHandler messegeHandler;
     private boolean isRunning = false;
 
     private Context context;
@@ -58,9 +58,9 @@ public class TcpClient implements Runnable {
 //                            Log.d("hi",temp);
 //                        }
                         if (JsonMessage != null && !JsonMessage.equals("")) {
-                            Message msg = mHandler.obtainMessage(MSG_REQUEST_RECEIVE, JsonMessage);
+                            Message msg = messegeHandler.obtainMessage(MSG_REQUEST_RECEIVE, JsonMessage);
                             Log.d("Get from server", JsonMessage);
-                            mHandler.sendMessage(msg);
+                            messegeHandler.sendMessage(msg);
                             //Toast.makeText(context,"Receive Data : " + msg.toString(), Toast.LENGTH_LONG).show();
                             dataFromServer = null;
                             JsonMessage = "";
@@ -73,12 +73,12 @@ public class TcpClient implements Runnable {
     }
 
     //생성자
-    public TcpClient(Context context, String ip, int port, MessegeHandler mHandler)
+    public TcpClient(Context context, String ip, int port, MessegeHandler messegeHandler)
     {
         this.context = context;
         this.ip = ip;
         this.port = port;
-        this.mHandler = mHandler;
+        this.messegeHandler = messegeHandler;
         this.socket = null;
     }
 
@@ -87,8 +87,8 @@ public class TcpClient implements Runnable {
     {
         if(socket!=null && socket.isConnected()) {
             Log.d("in","socket");
-            PrintWriter out = new PrintWriter(networkWriter, true);
-            out.println(str+"\n");
+            PrintWriter outData = new PrintWriter(networkWriter, true);
+            outData.println(str+"\n");
             Toast.makeText(context,"Send Data : " + str, Toast.LENGTH_LONG).show();
         }
         else{
@@ -132,10 +132,7 @@ public class TcpClient implements Runnable {
     //socket이 연결되어 있는지 확인하는 메소드
     public boolean isSocketOn()
     {
-        if(socket==null || !socket.isConnected())
-            return false;
-        else
-            return true;
+        return  !(socket==null || !socket.isConnected());
     }
 
     //스레드 작동여부를 설정하는 메소드

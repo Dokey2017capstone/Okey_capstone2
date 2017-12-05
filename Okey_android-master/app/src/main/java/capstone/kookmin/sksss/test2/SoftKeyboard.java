@@ -111,11 +111,11 @@ public class SoftKeyboard extends InputMethodService
     private String mWordSeparators;
 
     //서버 관련
-    private static final String ip = "203.246.112.165";
+    private static final String ip = "18.217.186.238";
     private static final int port = 8100;
     private MessegeHandler mHandler = new MessegeHandler(this);
     private TcpClient tcp = new TcpClient(this, ip, port, mHandler);
-    Thread t;
+    Thread networkThread;
     private static int NETWORK_DELAY = 2000; //서버 데이터 전송에 과부하를 막기위한 네트워크 딜레이(자동 오타수정, 띄어쓰기 기능 수행시)
     private long oldSendTime;
     //자동완성 및 DB 관련 -*-
@@ -252,6 +252,7 @@ public class SoftKeyboard extends InputMethodService
         @Override
         public void onClick(View view) {
             Button button = (Button)view;
+            Log.d("inButtonListner","OK");
 //            Keyboard currentKeyboard = mInputView.getKeyboard();
             switch (view.getId()){
                 //테스튼가?
@@ -282,6 +283,7 @@ public class SoftKeyboard extends InputMethodService
                     break;
                 //오타수정 바 혹은 갱신 버튼 클릭시
                 case R.id.com2CorChangeButton:
+                    Log.d("inCom2CorButton","OK");
                     setCandidatesView(correctionWordBar);
                 case R.id.renewCorrectionWord:
                     //서버로 보낼 오타 수정 메시지 작성 및 송신
@@ -406,26 +408,7 @@ public class SoftKeyboard extends InputMethodService
                 //팝업에서 수정단어 클릭시..
                 case R.id.correctionPopup1:
                     mDropdown.dismiss();
-                    //수정 위치와 수정될 단어의 길이를 구함
-                    if (!isTextEmpty()) {
-                        //현재 텍스트와 수정 단어 추출
-                        String currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
-                        String correctionWord = ((TextView)view).getText().toString();
-                        //매칭 알고리즘
-                        Pattern word = Pattern.compile(focusOldWordbyPopup);
-                        Matcher matchString = word.matcher(currentText);
-
-                        if (matchString.find()) {
-                            if (mComposing.length() > 0) {
-                                commitTyped(ic);
-                            }
-                            setText(matchString.start(), focusOldWordbyPopup.length(), correctionWord);
-                        } else
-                            makeCorrectFailToast();
-
-                    } else
-                        makeCorrectFailToast();
-
+                    processWordCorection(view);
                     correctionButtonInformList.remove(popUpPosition);
                     renewCorrectionButtonsAsCorrectionButtonInformList();
                     break;
@@ -437,6 +420,26 @@ public class SoftKeyboard extends InputMethodService
             }
         }
     };
+
+    private void processWordCorection(View popupWindow){
+        if (!isTextEmpty()) {
+            //현재 텍스트와 수정 단어 추출
+            String currentText = getCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0).text.toString();
+            String correctionWord = ((TextView)popupWindow).getText().toString();
+            //매칭 알고리즘
+            Pattern word = Pattern.compile(focusOldWordbyPopup);
+            Matcher matchString = word.matcher(currentText);
+
+            if (matchString.find()) {
+                if (mComposing.length() > 0) {
+                    commitTyped(getCurrentInputConnection());
+                }
+                setText(matchString.start(), focusOldWordbyPopup.length(), correctionWord);
+            } else
+                makeCorrectFailToast();
+        } else
+            makeCorrectFailToast();
+    }
 
     private void makeCorrectFailToast(){
         Toast.makeText(this.getApplicationContext() , "수정 실패 : 이미 텍스트가 바뀌었습니다.", Toast.LENGTH_SHORT).show();
@@ -496,9 +499,7 @@ public class SoftKeyboard extends InputMethodService
     //텍스트에 대한 입력 준비(입력 텍스트 보일시), 예제 함수
     @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
-
         clearHangul();
-
         // Reset our state.  We want to do this even if restarting, because
         // the underlying state of the text editor could have changed in any way.
         mComposing.setLength(0);
@@ -509,7 +510,6 @@ public class SoftKeyboard extends InputMethodService
         }
 
         mPredictionOn = true;
-
         // We are now going to initialize our state based on the type of
         // text being edited.
         //편집중인 텍스트 유형에 따라 초기화
@@ -1939,24 +1939,24 @@ public class SoftKeyboard extends InputMethodService
     //서버로 보낼 json 데이터 제작 함수
     public String makeJsonRequireFormat(boolean isSpacing, boolean isModified, String spacingData, String modifiedData)
     {
-        String msg = "{\"request\":[\"";
+        String messege = "{\"request\":[\"";
         if(isSpacing)
-            msg += "spacing\"";
+            messege += "spacing\"";
         if(isModified)
 //            if(isSpacing)
-//                msg += ",";
-            msg += "modified\"";
+//                messege += ",";
+            messege += "modified\"";
 
-        msg += "]";
+        messege += "]";
         if(isSpacing) {
-            msg += ",\"spacingData\":\"" + spacingData + "\"";
+            messege += ",\"spacingData\":\"" + spacingData + "\"";
         }
         if(isModified){
-            msg += ",\"modifiedData\":\"" + modifiedData + "\"";
+            messege += ",\"modifiedData\":\"" + modifiedData + "\"";
         }
-        msg += "}";
+        messege += "}";
 
-        return msg;
+        return messege;
     }
 
     //한글을 제외한 기준으로 스플릿하고 마지막에 " "삽입하는 함수
@@ -1973,29 +1973,29 @@ public class SoftKeyboard extends InputMethodService
 
 
     //softKeyboard에서 처리하는 메시지핸들러
-    public void handleMessage(Message msg){
+    public void handleMessage(Message messege){
 
-        switch (msg.what)
+        switch (messege.what)
         {
             case MSG_REQUEST_RECEIVE:
-                processJsonMessege(msg);
+                processJsonMessege(messege);
                 break;
         }
     }
 
-    private void processJsonMessege(Message msg){
+    private void processJsonMessege(Message messege){
         JSONObject jsonObject;
         JSONArray responseType;
         JSONArray correctionList;
-        InputConnection ic;
+        InputConnection inputConnection;
         String spacingData;
         JSONObject modifiedData;
 
-        Toast.makeText(this,"Receive Data : " + msg.obj.toString(), Toast.LENGTH_LONG).show();
-        Log.d("Receive Data : ", msg.obj.toString());
+        Toast.makeText(this,"Receive Data : " + messege.obj.toString(), Toast.LENGTH_LONG).show();
+        Log.d("Receive Data : ", messege.obj.toString());
         try {
-            ic = getCurrentInputConnection();
-            jsonObject = new JSONObject((String) msg.obj);
+            inputConnection = getCurrentInputConnection();
+            jsonObject = new JSONObject((String) messege.obj);
 //            obj = new JSONObject("{\"response\" : [\"modified\"],\"modified\" : {\"나는\" : [\"0\",\"ㅋㅋ\"],\"김정민\" : [\"1\",\"ㅎㅎ\"]}}");
             responseType = (JSONArray) jsonObject.getJSONArray("response");
 
@@ -2003,14 +2003,14 @@ public class SoftKeyboard extends InputMethodService
             if(responseType.getString(0).equals("spacing"))
             {
                 spacingData = jsonObject.getString("spacing");
-                ic.finishComposingText();
+                inputConnection.finishComposingText();
                 //isCommitted = true;
                 //-*-띄어쓰기 문제 있을시 deleteSurrounding을 주석처리하고 아래 세 줄 주석해제 할것.
 //                        int oldTextNum = ic.getExtractedText(new ExtractedTextRequest(), 0).text.length();
 //                        ic.setSelection(oldTextNum, oldTextNum);
 //                        ic.deleteSurroundingText(oldTextNum,0);
-                ic.deleteSurroundingText(MAX_TEXT,MAX_TEXT);
-                ic.commitText(spacingData,1);
+                inputConnection.deleteSurroundingText(MAX_TEXT,MAX_TEXT);
+                inputConnection.commitText(spacingData,1);
             }
 
             //오타 수정의 경우
@@ -2063,22 +2063,23 @@ public class SoftKeyboard extends InputMethodService
             correctionButton[j].setText(correctionButtonInformList.get(j).getOldWord());
         }
     }
-    private void clearButtonListText(Button[] btn){
-        for(int i = 0; i < btn.length; i++)
+
+    private void clearButtonListText(Button[] button){
+        for(int i = 0; i < button.length; i++)
         {
-            btn[i].setText("");
+            button[i].setText("");
         }
     }
 
     //tcp 연결 및 통신 시작
     private void TcpOpen(TcpClient tcp){
         if(!tcp.getIsRunning()) {
-            t = null;
-            t = new Thread(tcp);
+            networkThread = null;
+            networkThread = new Thread(tcp);
             tcp.setRunningState(true);
 //            Log.d("what Thread",tcp.toString());
-            t.start();
-            Log.d("numThread",String.valueOf(Thread.activeCount()));
+            networkThread.start();
+            Log.d("number of thread",String.valueOf(Thread.activeCount()));
         }
     }
 
@@ -2088,10 +2089,10 @@ public class SoftKeyboard extends InputMethodService
 //        tcp.socketClose();
 //    }
 
-    //pass
+    //pass 여기부터시작!!
     private void updateCompletionWordAsOneCursor(int cursor)
     {
-        InputConnection ic = getCurrentInputConnection();
+        InputConnection inputConnection = getCurrentInputConnection();
         String completeOldWord = "";
 
         String oneLoopBeforeWord;
@@ -2103,7 +2104,7 @@ public class SoftKeyboard extends InputMethodService
             do
             {
                 oneLoopBeforeWord = cursorLeftWord;
-                cursorLeftWord = ic.getTextBeforeCursor(cursorBeforeRelativePosition,0).toString();
+                cursorLeftWord = inputConnection.getTextBeforeCursor(cursorBeforeRelativePosition,0).toString();
                 cursorBeforeRelativePosition++;
             }while(!cursorLeftWord.equals(oneLoopBeforeWord) && !isWordSeparator(cursorLeftWord.charAt(0)));
 
@@ -2116,14 +2117,14 @@ public class SoftKeyboard extends InputMethodService
             completionOldWordInform.setStartPos(cursor);
 
         //커서 후 단어
-        if(!isCursorRightmost(ic))
+        if(!isCursorRightmost(inputConnection))
         {
             String cursorRightWord = "";
             int cursorBeforeRelativePosition = 1;
             do
             {
                 oneLoopBeforeWord = cursorRightWord;
-                cursorRightWord = ic.getTextAfterCursor(cursorBeforeRelativePosition,0).toString();
+                cursorRightWord = inputConnection.getTextAfterCursor(cursorBeforeRelativePosition,0).toString();
                 cursorBeforeRelativePosition++;
                 Log.d("complWord", "!" + cursorRightWord + "?");
             }while(!cursorRightWord.equals(oneLoopBeforeWord) && !isWordSeparator(cursorRightWord.charAt(cursorRightWord.length() - 1)));
@@ -2170,11 +2171,13 @@ public class SoftKeyboard extends InputMethodService
 
     private void connectAndSendCorrectionJson()
     {
-        InputConnection ic = getCurrentInputConnection();
+        InputConnection inputConnection = getCurrentInputConnection();
         if(!tcp.getIsRunning())
             TcpOpen(tcp);
+        Log.d("outOfEmpty","OK");
         if(!isTextEmpty()) {
-            String text = ic.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
+            Log.d("inOfEmpty","OK");
+            String text = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
             String correctionJsonMessege = makeJsonRequireFormat(false, true, null, hangulTextSplitPlusOneSpace(text));
 //            Log.d("text??", sendJson);
             tcp.sendData(correctionJsonMessege);
@@ -2184,13 +2187,13 @@ public class SoftKeyboard extends InputMethodService
     private void connectAndSendSpacingJson()
     {
         //Log.d("in???","?????????");
-        InputConnection ic = getCurrentInputConnection();
+        InputConnection inputConnection = getCurrentInputConnection();
 
         //서버로 보낼 자동 띄어쓰기 모델 메시지 작성 및 송신
         if(!tcp.getIsRunning())
             TcpOpen(tcp);
         if(!isTextEmpty()) {
-            String text = ic.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
+            String text = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
             String sendJson = makeJsonRequireFormat(true, false, text.replaceAll("\n"," "), null);
 //            Log.d("text??", sendJson);
             tcp.sendData(sendJson);
@@ -2198,15 +2201,15 @@ public class SoftKeyboard extends InputMethodService
     }
 
     private boolean isTextEmpty(){
-        return (getCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0) != null
+        return (getCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0) == null
                 || getCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0).text.toString().equals(""));
     }
 
     void updateCompletionOldWordInformAsCursur(int startCursor, int finishCursor){
-        InputConnection ic = getCurrentInputConnection();
+        InputConnection inputConnection = getCurrentInputConnection();
         if(isBlurredText(startCursor, finishCursor))
         {
-            completionOldWordInform.setOldWord(ic.getSelectedText(0).toString());
+            completionOldWordInform.setOldWord(inputConnection.getSelectedText(0).toString());
             completionOldWordInform.setStartPos(startCursor);
             completionOldWordInform.setLastPos(finishCursor);
         }
