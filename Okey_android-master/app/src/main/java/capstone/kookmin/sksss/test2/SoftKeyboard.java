@@ -111,7 +111,7 @@ public class SoftKeyboard extends InputMethodService
     private String mWordSeparators;
 
     //서버 관련
-    private static final String ip = "203.246.112.165";
+    private static final String ip = "18.217.186.238";
     private static final int port = 8100;
     private MessegeHandler mHandler = new MessegeHandler(this);
     private TcpClient tcp = new TcpClient(this, ip, port, mHandler);
