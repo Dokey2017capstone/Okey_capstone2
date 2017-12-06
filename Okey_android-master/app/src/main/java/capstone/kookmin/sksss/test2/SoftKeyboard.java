@@ -71,6 +71,8 @@ public class SoftKeyboard extends InputMethodService
 
     //서버에서 받은 데이터 종류에 대한 메시지 핸들러
     static final int MSG_REQUEST_RECEIVE = 0;
+    static final int MSG_AUTO_CORRECTION_RECEIVE = 1;
+    static final int MSG_AUTO_SPACING_RECEIVE = 2;
     //옵션창으로 전환할 keycode
     static final int CODE_OPTION_VIEW = -8;
     static final int CODE_AUTO_CORRECTION = -9;
@@ -85,8 +87,8 @@ public class SoftKeyboard extends InputMethodService
     private List<correctionButtonInform> correctionButtonInformList = new ArrayList<correctionButtonInform>();    //단어 수정 버튼 클릭시 수행되는 과정에서 필요한 정보를 담은 클래스
 //    private List<int[]> correctionTextPosition = new ArrayList<int[]>();
 
-    private boolean isAutoCorrect = false;
-    private boolean isAutoSpacing = false;
+//    private boolean isAutoCorrect = false;
+//    private boolean isAutoSpacing = false;
     //현재 키보드
     private Keyboard mCurrentKeyboard;
     private boolean mPredictionOn;
@@ -113,11 +115,13 @@ public class SoftKeyboard extends InputMethodService
     //서버 관련
     private static final String ip = "18.217.186.238";
     private static final int port = 8100;
-    private MessegeHandler mHandler = new MessegeHandler(this);
-    private TcpClient tcp = new TcpClient(this, ip, port, mHandler);
+    private MessegeHandler messegeHandler = new MessegeHandler(this);
+    private TcpClient tcp = new TcpClient(this, ip, port, messegeHandler);
     Thread tcpThread;
-    private static int NETWORK_DELAY = 2000; //서버 데이터 전송에 과부하를 막기위한 네트워크 딜레이(자동 오타수정, 띄어쓰기 기능 수행시)
-    private long oldSendTime;
+    private AutoFunction autoFunction = new AutoFunction();
+    Thread autoFunctionThread;
+//    private static int NETWORK_DELAY = 2000; //서버 데이터 전송에 과부하를 막기위한 네트워크 딜레이(자동 오타수정, 띄어쓰기 기능 수행시)
+//    private long oldSendTime;
     //자동완성 및 DB 관련 -*-
     DatabaseHandler databaseH;
     String[] item = new String[]{"please Search.."};
@@ -428,8 +432,10 @@ public class SoftKeyboard extends InputMethodService
 
         InputConnection inputConnection = getCurrentInputConnection();
 
+        Log.d("이","히");
         //수정 위치와 수정될 단어의 길이를 구함
         if (!isTextEmpty()) {
+            Log.d("이","히히");
             //현재 텍스트와 수정 단어 추출
             String currentText = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
             String correctionWord = ((TextView)view).getText().toString();
@@ -633,6 +639,12 @@ public class SoftKeyboard extends InputMethodService
         //선택한 키보드를 입력보기에 적용하십시오.
         mInputView.setKeyboard(mCurKeyboard);
         mInputView.closing();
+        setAutoFunctionThreadCheckAndRun();
+    }
+
+    private void setAutoFunctionThreadCheckAndRun(){
+        if(autoFunctionThread==null || autoFunctionThread.getState() == Thread.State.TERMINATED)
+            autoFunctionThreadRun(autoFunction);
     }
 
     @Override
@@ -969,7 +981,8 @@ public class SoftKeyboard extends InputMethodService
         sendKey(primaryCode);
         updateShiftKeyState(getCurrentInputEditorInfo());
         //서버 데이터 전송 과부하를 막기 위한 delay 삽입
-        delaySendForAutoFunction();
+//        delaySendForAutoFunction();
+        autoFunction.renewStateByFieldEditing();
     }
 
     final int AUTO_CORRECTION_BUTTON = 0;
@@ -999,8 +1012,8 @@ public class SoftKeyboard extends InputMethodService
                     //mCurrentKeyboard = currentKeyboard;
                     //currentKeyboard = mOptionKeyboard;
                     mInputView.setKeyboard(mOptionKeyboard);
-                    mInputView.getKeyboard().getKeys().get(AUTO_CORRECTION_BUTTON).on = isAutoCorrect;
-                    mInputView.getKeyboard().getKeys().get(AUTO_SPACING_BUTTON).on = isAutoSpacing;
+                    mInputView.getKeyboard().getKeys().get(AUTO_CORRECTION_BUTTON).on = autoFunction.getIsAutoCorrection();//isAutoCorrect;
+                    mInputView.getKeyboard().getKeys().get(AUTO_SPACING_BUTTON).on = autoFunction.getIsAutoSpacing();//isAutoSpacing;
                 }
                 else {
                     //currentKeyboard = mCurrentKeyboard;
@@ -1008,10 +1021,12 @@ public class SoftKeyboard extends InputMethodService
                 }
                 break;
             case CODE_AUTO_CORRECTION:
-                isAutoCorrect = !isAutoCorrect;
+//                isAutoCorrect = !isAutoCorrect;
+                autoFunction.toggleIsAutoCorrection();
                 break;
             case CODE_AUTO_SPACING:
-                isAutoSpacing = !isAutoSpacing;
+//                isAutoSpacing = !isAutoSpacing;
+                autoFunction.toggleIsAutoSpacing();
                 break;
         }
     }
@@ -1082,21 +1097,19 @@ public class SoftKeyboard extends InputMethodService
             handleCharacter(primaryCode, keyCodes);
         }
         // Hangul End Code
-        delaySendForAutoFunction();
+//        delaySendForAutoFunction();
+        autoFunction.renewStateByFieldEditing();
     }
 
     //자동 오타수정 및 띄어쓰기
     //서버 데이터 전송 과부하를 막기 위한 delay 삽입
-    private void delaySendForAutoFunction(){
-        long newSendTime = System.currentTimeMillis();
-        if(newSendTime-oldSendTime>NETWORK_DELAY) {
-            if (isAutoCorrect)
-                connectAndSendCorrectionJson();
-            if (isAutoSpacing)
-                connectAndSendSpacingJson();
-            oldSendTime = newSendTime;
-        }
-    }
+//    private void delaySendForAutoFunction(){
+//        long newSendTime = System.currentTimeMillis();
+//        if(isAutoCorrect && newSendTime-oldSendTime>NETWORK_DELAY) {
+//            connectAndSendCorrectionJson();
+//            oldSendTime = newSendTime;
+//        }
+//    }
 
     //예제코드
     public void onText(CharSequence text) {
@@ -1986,12 +1999,19 @@ public class SoftKeyboard extends InputMethodService
 
 
     //softKeyboard에서 처리하는 메시지핸들러
+    //여기서부터!!!!
     public void handleMessage(Message messege){
 
         switch (messege.what)
         {
             case MSG_REQUEST_RECEIVE:
                 processJsonMessege(messege);
+                break;
+            case MSG_AUTO_CORRECTION_RECEIVE:
+                processAutoCorrectionMessege(messege);
+                break;
+            case MSG_AUTO_SPACING_RECEIVE:
+                processAutoSpacingMessege(messege);
                 break;
         }
     }
@@ -2066,6 +2086,16 @@ public class SoftKeyboard extends InputMethodService
         }
     }
 
+    private void processAutoCorrectionMessege(Message messege)
+    {
+        ////채우기
+    }
+
+    private void processAutoSpacingMessege(Message messege)
+    {
+
+    }
+
     private void renewCorrectionButtonsAsCorrectionButtonInformList(){
         clearButtonListText(correctionButton);
         for(int j = 0; j < correctionButtonInformList.size(); j++)
@@ -2093,6 +2123,12 @@ public class SoftKeyboard extends InputMethodService
             tcpThread.start();
             Log.d("numThread",String.valueOf(Thread.activeCount()));
         }
+    }
+
+    private void autoFunctionThreadRun(AutoFunction thread){
+        thread = null;
+        autoFunctionThread = new Thread(thread);
+        autoFunctionThread.start();
     }
 
     //tcp 연결 해제
