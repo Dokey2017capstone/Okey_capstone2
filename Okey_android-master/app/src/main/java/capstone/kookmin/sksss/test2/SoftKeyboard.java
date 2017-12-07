@@ -409,6 +409,7 @@ public class SoftKeyboard extends InputMethodService
         return correctionButtonInformList.size()>popUpPosition;
     }
 
+    //오타 수정시 팝업 관련 클릭 리스너
     TextView.OnClickListener mOnTextViewClickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -641,6 +642,7 @@ public class SoftKeyboard extends InputMethodService
         mInputView.closing();
     }
 
+    //AutoFunction 쓰레드 확인 후 실행
     private void setAutoFunctionThreadCheckAndRun(){
         if(isAutoFunctionNotRun()) {
             Log.d("softKeyboard","is작동???");
@@ -716,7 +718,7 @@ public class SoftKeyboard extends InputMethodService
      * in that situation.
      */
     //inputMethod가 디스플레이되기 원하는 자동완성 후보자를 보고할떄 호출됨
-    //자동완성 리스트 적용인듯?
+    //자동완성 리스트 적용인듯?, 사용하지 않는 함수
     @Override public void onDisplayCompletions(CompletionInfo[] completions) {
 //        if (mCompletionOn) {
 //            mCompletions = completions;
@@ -1040,10 +1042,16 @@ public class SoftKeyboard extends InputMethodService
         }
     }
 
+    private void popUpDIctionaryResult(){
+        String dictionaryText = dictionarySearchForSelectedText();
+        ////////////////////////////////////////
+    }
+
     private String dictionarySearchForSelectedText(){
         return ApiDictionary.Apidictionary(getCurrentInputConnection().getSelectedText(0).toString());
     }
 
+    //하드키 판별 함수
     private boolean isHardKey(int primaryCode){
         switch (primaryCode){
             case Keyboard.KEYCODE_DELETE:
@@ -1097,6 +1105,7 @@ public class SoftKeyboard extends InputMethodService
         mCurrentKeyboard = mInputView.getKeyboard();
     }
 
+    //모드 체인지 판별 함수
     private boolean isModeChangeKey(int primaryCode){
         return (primaryCode == Keyboard.KEYCODE_MODE_CHANGE || primaryCode == CODE_SYMBOL_KEYBOARD);
     }
@@ -1124,7 +1133,7 @@ public class SoftKeyboard extends InputMethodService
 //        }
 //    }
 
-    //예제코드
+    //예제코드, 텍스트 입력 도우미 함수
     public void onText(CharSequence text) {
         InputConnection ic = getCurrentInputConnection();
         if (ic == null) return;
@@ -1229,7 +1238,7 @@ public class SoftKeyboard extends InputMethodService
     }
 
 // Hangul Code Start
-    //예제코드
+    //예제코드, 한글 자모조합(단자음(모음), 이중자음(자음)) 판별
     private int isHangulKey(int stack_pos, int new_key) {
         if (stack_pos != 2) {
             switch (mHangulKeyStack[stack_pos]) {
@@ -1291,8 +1300,10 @@ public class SoftKeyboard extends InputMethodService
     private static int mHCursorState = HCURSOR_NONE;
     private int mHangulShiftState = 0;
     private int mHangulState = 0;
+    //한글 자모조합 스택
     private static int mHangulKeyStack[] = {0,0,0,0,0,0};
     private static int mHangulJamoStack[] = {0,0,0};
+    //한글 오토마타 state
     final static int H_STATE_0 = 0;
     final static int H_STATE_1 = 1;
     final static int H_STATE_2 = 2;
@@ -1310,6 +1321,7 @@ public class SoftKeyboard extends InputMethodService
             {16,47,25,22,6, 8,29,38,32,34,30,50,48,43,31,35,17,0, 3,20,36,28,23,27,42,26,
                     16,47,25,22,7, 8,29,38,32,34,30,50,48,43,33,37,18,1, 3,21,36,28,24,27,42,26};
 
+    //한글 입력 관련 리소스 초기화
     private void clearHangul() {
         mHCursorState = HCURSOR_NONE;
         mHangulState = 0;
@@ -1326,7 +1338,7 @@ public class SoftKeyboard extends InputMethodService
         return;
     }
 
-    //예제코드
+    //예제코드, 한글 자모 조합 알고리즘
     private void hangulSendKey(int newHangulChar, int hCursor) {
 
         if (hCursor == HCURSOR_NEW) {
@@ -1470,7 +1482,7 @@ public class SoftKeyboard extends InputMethodService
         }
     }
 
-    //예제코드
+    //예제코드, 한글 처리
     private void handleHangul(int primaryCode, int[] keyCodes) {
 
         int hangulKeyIdx = -1;
@@ -1876,7 +1888,7 @@ public class SoftKeyboard extends InputMethodService
     }
 // Hangul Code End    
 
-    //예제코드
+    //예제코드, 입력 캐릭터 처리
     private void handleCharacter(int primaryCode, int[] keyCodes) {
         if (isInputViewShown()) {
             if (mInputView.isShifted()) {
@@ -1900,7 +1912,7 @@ public class SoftKeyboard extends InputMethodService
         mInputView.closing();
     }
 
-    //예제코드
+    //예제코드, capsLock 키 처리
     private void checkToggleCapsLock() {
         long now = System.currentTimeMillis();
         if (mLastShiftTime + 800 > now) {
@@ -2012,7 +2024,6 @@ public class SoftKeyboard extends InputMethodService
 
 
     //softKeyboard에서 처리하는 메시지핸들러
-    //여기서부터!!!!
     public void handleMessage(Message messege){
 
         switch (messege.what)
@@ -2150,7 +2161,7 @@ public class SoftKeyboard extends InputMethodService
 //        tcp.socketClose();
 //    }
 
-    //pass
+    //커서에 따른 자동완성 단어 추천
     private void updateCompletionWordAsOneCursor(int cursor)
     {
         InputConnection ic = getCurrentInputConnection();
@@ -2280,6 +2291,7 @@ public class SoftKeyboard extends InputMethodService
         updateCompletionButtons();// 후보자 추천 설정
     }
 
+    //블럭된 텍스트인지
     boolean isBlurredText(int startCursor, int finishCursor){
         return (startCursor<finishCursor && getCurrentInputConnection().getSelectedText(0)!=null);
     }
