@@ -433,10 +433,8 @@ public class SoftKeyboard extends InputMethodService
 
         InputConnection inputConnection = getCurrentInputConnection();
 
-        Log.d("이","히");
         //수정 위치와 수정될 단어의 길이를 구함
         if (!isTextEmpty()) {
-            Log.d("이","히히");
             //현재 텍스트와 수정 단어 추출
             String currentText = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
             String correctionWord = ((TextView)view).getText().toString();
@@ -640,7 +638,6 @@ public class SoftKeyboard extends InputMethodService
         //선택한 키보드를 입력보기에 적용하십시오.
         mInputView.setKeyboard(mCurKeyboard);
         mInputView.closing();
-        setAutoFunctionThreadCheckAndRun();
     }
 
     private void setAutoFunctionThreadCheckAndRun(){
@@ -1018,6 +1015,7 @@ public class SoftKeyboard extends InputMethodService
                     clearHangul();
                     //mCurrentKeyboard = currentKeyboard;
                     //currentKeyboard = mOptionKeyboard;
+                    setAutoFunctionThreadCheckAndRun();
                     mInputView.setKeyboard(mOptionKeyboard);
                     mInputView.getKeyboard().getKeys().get(AUTO_CORRECTION_BUTTON).on = autoFunction.getIsAutoCorrection();//isAutoCorrect;
                     mInputView.getKeyboard().getKeys().get(AUTO_SPACING_BUTTON).on = autoFunction.getIsAutoSpacing();//isAutoSpacing;
