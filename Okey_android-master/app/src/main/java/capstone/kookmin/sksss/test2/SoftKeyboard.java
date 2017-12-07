@@ -19,6 +19,7 @@
 
 package capstone.kookmin.sksss.test2;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -76,6 +77,7 @@ public class SoftKeyboard extends InputMethodService
     static final int CODE_AUTO_CORRECTION = -9;
     static final int CODE_AUTO_SPACING = -10;
     static final int CODE_SYMBOL_KEYBOARD = -7;
+    static final int CODE_SEARCH = -11;
 
     private KeyboardView mInputView;
 //    private CompletionInfo[] mCompletions;
@@ -1000,8 +1002,28 @@ public class SoftKeyboard extends InputMethodService
             case CODE_AUTO_SPACING:
                 isAutoSpacing = !isAutoSpacing;
                 break;
+            case CODE_SEARCH:
+                InputConnection input = getCurrentInputConnection();        //텍스트창 내용 확인
+                //String text = input.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
+                final String text = input.getSelectedText(0).toString();      //블록되어있는 텍스트만
+
+                new Thread(){
+                    public void run(){
+                        String result = ApiDictionary.Apidictionary(text);
+                        System.out.println(result);
+                    }
+                }.start();
+
+                /*
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("사전");
+                dialog.setMessage(result);
+                dialog.show();
+                */
+                break;
         }
     }
+
 
     private boolean isHardKey(int primaryCode){
         switch (primaryCode){
@@ -1010,6 +1032,7 @@ public class SoftKeyboard extends InputMethodService
             case CODE_OPTION_VIEW:
             case CODE_AUTO_CORRECTION:
             case CODE_AUTO_SPACING:
+            case CODE_SEARCH:
                 return true;
             default:
                 return false;

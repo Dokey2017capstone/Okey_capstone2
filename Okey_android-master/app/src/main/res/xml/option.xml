@@ -13,6 +13,8 @@
             android:isSticky="true" android:keyWidth="100%p"/>
     </Row>
     <Row>
+        <Key android:codes="-11" android:keyLabel="Search" android:keyEdgeFlags="left"
+            android:isSticky="false" android:keyWidth="100%p"/>
     </Row>
     <Row>
     </Row>

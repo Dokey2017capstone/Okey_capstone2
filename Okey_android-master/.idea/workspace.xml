@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Firebase" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71e96600-267c-4d70-a5dd-28d4fb372033" name="Default" comment="" />
@@ -41,21 +41,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="correctionButtonInform.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/correctionButtonInform.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ApiDictionary.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApiDictionary.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/ApiDictionary.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="36" column="43" lean-forward="true" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
+            <state relative-caret-position="171">
+              <caret line="36" column="17" lean-forward="false" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,12 +53,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="option.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/option.xml">
+      <file leaf-file-name="SoftKeyboard.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="244">
+              <caret line="1012" column="51" lean-forward="true" selection-start-line="1012" selection-start-column="51" selection-end-line="1012" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#91768#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#40755#40974#0" expanded="true" />
+                <element signature="e#40973#40974#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,6 +76,18 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>isHardKey</find>
+      <find>CODE_AUTO_SPACING</find>
+      <find>processJson</find>
+      <find>onClickList</find>
+      <find>connectAndSendCorrectionJson</find>
+      <find>search</find>
+      <find>dialog</find>
+      <find>CODE_SEARCH</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -1755,11 +1762,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/correctionButtonInform.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/TcpClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/MessegeHandler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/ApiDictionary.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/APItranslate.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/option.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/ApiDictionary.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java" />
       </list>
     </option>
   </component>
@@ -1790,6 +1798,16 @@
       <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Okey_android-master" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Okey_android-master" />
@@ -1832,6 +1850,38 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Okey_android-master" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Okey_android-master" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test2" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -1842,6 +1892,7 @@
     <property name="device.picker.selection" value="LG-F240L-8ecab304" />
     <property name="android.project.structure.last.selected" value="Project" />
     <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.profiler.active" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -1855,7 +1906,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiDictionary">
+  <component name="RunManager" selected="Android App.app">
     <configuration default="false" name="ApiDictionary" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1864,6 +1915,26 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="capstone.kookmin.sksss.test2.ApiDictionary" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="app" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="APItranslate" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="capstone.kookmin.sksss.test2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="capstone.kookmin.sksss.test2.APItranslate" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -1946,7 +2017,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512629918872" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512640560929" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -1994,7 +2065,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512629918873" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512640560929" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2177,16 +2248,18 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512629918875" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512640560931" />
       </method>
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Android App.app" />
       <item index="1" class="java.lang.String" itemvalue="Application.ApiDictionary" />
+      <item index="2" class="java.lang.String" itemvalue="Application.APItranslate" />
     </list>
     <recent_temporary>
-      <list size="1">
+      <list size="2">
         <item index="0" class="java.lang.String" itemvalue="Application.ApiDictionary" />
+        <item index="1" class="java.lang.String" itemvalue="Application.APItranslate" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
@@ -2227,21 +2300,22 @@
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3226257" sideWeight="0.49783784" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33519554" sideWeight="0.49783784" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4321295" sideWeight="0.50324327" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16480447" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42039105" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45530728" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16452442" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13303342" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2256,7 +2330,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2278,25 +2351,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/correctionButtonInform.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/input.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/keyboard.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2332,7 +2386,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#90854#0" expanded="true" />
+            <element signature="e#0#91768#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -2454,57 +2508,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/sejong.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/correctionwordbar.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="13" column="36" lean-forward="false" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/completionwordbar.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="19" column="36" lean-forward="false" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/keyboard.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/preview.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/input.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/qwerty.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2184">
@@ -2513,27 +2516,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/CandidateView.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/correctionwordpopup.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2527">
-          <caret line="233" column="26" lean-forward="true" selection-start-line="233" selection-start-column="26" selection-end-line="233" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#90854#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/wordPositionInform.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -2549,6 +2531,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="28" column="39" lean-forward="false" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2556,6 +2539,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2563,13 +2547,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/LatinKeyboardView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2580,25 +2558,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/DatabaseHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="42" column="4" lean-forward="false" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/CustomAutoCompleteView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6">
-          <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2626,10 +2589,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/option.xml">
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-25/android.jar!/java/lang/ClassLoader.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+        <state relative-caret-position="379">
+          <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/APItranslate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="55" column="31" lean-forward="true" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="82" lean-forward="false" selection-start-line="11" selection-start-column="82" selection-end-line="11" selection-end-column="82" />
           <folding />
         </state>
       </provider>
@@ -2642,12 +2621,115 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/completionwordbar.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="36" lean-forward="false" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/correctionwordbar.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="36" lean-forward="false" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/correctionwordpopup.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-254">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/keyboard.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/preview.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/DatabaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="42" column="4" lean-forward="false" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/option.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="31" lean-forward="false" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/LatinKeyboardView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/ApiDictionary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="36" column="43" lean-forward="true" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
+        <state relative-caret-position="171">
+          <caret line="36" column="17" lean-forward="false" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/capstone/kookmin/sksss/test2/SoftKeyboard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="1012" column="51" lean-forward="true" selection-start-line="1012" selection-start-column="51" selection-end-line="1012" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#91768#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#40755#40974#0" expanded="true" />
+            <element signature="e#40973#40974#0" expanded="true" />
           </folding>
         </state>
       </provider>
