@@ -78,6 +78,7 @@ public class SoftKeyboard extends InputMethodService
     static final int CODE_AUTO_CORRECTION = -9;
     static final int CODE_AUTO_SPACING = -10;
     static final int CODE_SYMBOL_KEYBOARD = -7;
+    static final int CODE_DICTIONARY_SEARCH = -11;
 
     private KeyboardView mInputView;
 //    private CompletionInfo[] mCompletions;
@@ -1033,7 +1034,14 @@ public class SoftKeyboard extends InputMethodService
 //                isAutoSpacing = !isAutoSpacing;
                 autoFunction.toggleIsAutoSpacing();
                 break;
+            case CODE_DICTIONARY_SEARCH:
+
+                break;
         }
+    }
+
+    private String dictionarySearchForSelectedText(){
+        return ApiDictionary.Apidictionary(getCurrentInputConnection().getSelectedText(0).toString());
     }
 
     private boolean isHardKey(int primaryCode){

@@ -12,6 +12,8 @@
         <Key android:codes="-10" android:keyLabel="AutoSpacingUpdate" android:keyEdgeFlags="left"
             android:isSticky="true" android:keyWidth="100%p"/>
     </Row>
+        <Key android:codes="-11" android:keyLabel="Search" android:keyEdgeFlags="left"
+            android:keyWidth="100%p"/>
     <Row>
     </Row>
     <Row>
