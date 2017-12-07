@@ -1,6 +1,7 @@
 package capstone.kookmin.sksss.test2;
 
 import android.os.Message;
+import android.util.Log;
 
 import static capstone.kookmin.sksss.test2.SoftKeyboard.MSG_AUTO_CORRECTION_RECEIVE;
 import static capstone.kookmin.sksss.test2.SoftKeyboard.MSG_AUTO_SPACING_RECEIVE;
@@ -22,28 +23,40 @@ public class AutoFunction implements Runnable{
     private boolean fieldEditingFlag = false;
 //    boolean renewLastEditingTime = true;
 //    boolean renewLastAutoCorrectionTime = true;
-    MessegeHandler messegeHandler;
-    Message autoSpacingMessage = messegeHandler.obtainMessage(MSG_REQUEST_RECEIVE, MSG_AUTO_SPACING_RECEIVE);
-    Message autoCorrectionMessage = messegeHandler.obtainMessage(MSG_REQUEST_RECEIVE, MSG_AUTO_CORRECTION_RECEIVE);
+    private MessegeHandler messegeHandler;
+    private Message autoSpacingMessage;
+    private Message autoCorrectionMessage;
 
     @Override
     public void run() {
+        while(true) {
+//            Log.d("AutoFunction", "run1");
 
-        currentTime = System.currentTimeMillis();
-        //필드 에딧팅 끝나면 fieldEditingFlag를 false로 설정
-        if(isFinishTextFieldEditing() && fieldEditingFlag){
+            currentTime = System.currentTimeMillis();
+            //필드 에딧팅 끝나면 fieldEditingFlag를 false로 설정
+            if (isFinishTextFieldEditing() && fieldEditingFlag) {
+//                Log.d("AutoFunction", "run2");
+                if (isAutoSpacing) {
+                    Log.d("AutoFunction", "run3");
+                    autoSpacingMessage = messegeHandler.obtainMessage(MSG_AUTO_SPACING_RECEIVE);
+                    messegeHandler.sendMessage(autoSpacingMessage);
+                }
 
-            if(isAutoSpacing){
-                messegeHandler.sendMessage(autoSpacingMessage);
+                fieldEditingFlag = false;
             }
 
-            fieldEditingFlag = false;
+            if (isAutoCorrection && fieldEditingFlag && isAutoCorrectionTime()) {
+                Log.d("AutoFunction", "run4");
+                autoCorrectionMessage = messegeHandler.obtainMessage(MSG_AUTO_CORRECTION_RECEIVE);
+                messegeHandler.sendMessage(autoCorrectionMessage);
+                lastAutoCorrectionTime = currentTime;
+            }
         }
+    }
 
-        if(isAutoCorrection && fieldEditingFlag && isAutoCorrectionTime()){
-            messegeHandler.sendMessage(autoCorrectionMessage);
-            lastAutoCorrectionTime = currentTime;
-        }
+    public AutoFunction(MessegeHandler messegeHandler)
+    {
+        this.messegeHandler = messegeHandler;
     }
 
     public void renewStateByFieldEditing(){
@@ -76,7 +89,7 @@ public class AutoFunction implements Runnable{
     }
 
     private boolean isFinishTextFieldEditing(){
-        return ((lastEditingTime - currentTime) > FIELD_EDITING_DELAY);
+        return ((currentTime - lastEditingTime) > FIELD_EDITING_DELAY);
     }
 
     private boolean isAutoCorrectionTime(){

@@ -70,7 +70,7 @@ public class SoftKeyboard extends InputMethodService
     static final int MAX_TEXT = 10000;  //최대 텍스트 길이
 
     //서버에서 받은 데이터 종류에 대한 메시지 핸들러
-    static final int MSG_REQUEST_RECEIVE = 0;
+    static final int MSG_REQUEST_RECEIVE = 3;
     static final int MSG_AUTO_CORRECTION_RECEIVE = 1;
     static final int MSG_AUTO_SPACING_RECEIVE = 2;
     //옵션창으로 전환할 keycode
@@ -118,8 +118,8 @@ public class SoftKeyboard extends InputMethodService
     private MessegeHandler messegeHandler = new MessegeHandler(this);
     private TcpClient tcp = new TcpClient(this, ip, port, messegeHandler);
     Thread tcpThread;
-    private AutoFunction autoFunction = new AutoFunction();
-    Thread autoFunctionThread;
+    private AutoFunction autoFunction = new AutoFunction(messegeHandler);
+    Thread autoFunctionThread = null;
 //    private static int NETWORK_DELAY = 2000; //서버 데이터 전송에 과부하를 막기위한 네트워크 딜레이(자동 오타수정, 띄어쓰기 기능 수행시)
 //    private long oldSendTime;
     //자동완성 및 DB 관련 -*-
@@ -400,6 +400,7 @@ public class SoftKeyboard extends InputMethodService
         Drawable background = getResources().getDrawable(R.drawable.popuplayout_bg);
         dropdown.setBackgroundDrawable(background);
         correctionWordTextView.setOnClickListener(mOnTextViewClickListner);
+        noCorrectTextView.setOnClickListener(mOnTextViewClickListner);
         correctionWordTextView.setText("");
     }
 
@@ -643,8 +644,14 @@ public class SoftKeyboard extends InputMethodService
     }
 
     private void setAutoFunctionThreadCheckAndRun(){
-        if(autoFunctionThread==null || autoFunctionThread.getState() == Thread.State.TERMINATED)
+        if(isAutoFunctionNotRun()) {
+            Log.d("softKeyboard","is작동???");
             autoFunctionThreadRun(autoFunction);
+        }
+    }
+
+    private boolean isAutoFunctionNotRun(){
+        return (autoFunctionThread == null || autoFunctionThread.getState() == Thread.State.TERMINATED || autoFunctionThread.getState() == Thread.State.BLOCKED);
     }
 
     @Override
@@ -2024,7 +2031,7 @@ public class SoftKeyboard extends InputMethodService
         String spacingData;
         JSONObject modifiedData;
 
-        Toast.makeText(this,"Receive Data : " + messege.obj.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Receive Data : " + messege.obj.toString(), Toast.LENGTH_SHORT).show();
         Log.d("Receive Data : ", messege.obj.toString());
         try {
             inputConnection = getCurrentInputConnection();
@@ -2088,12 +2095,12 @@ public class SoftKeyboard extends InputMethodService
 
     private void processAutoCorrectionMessege(Message messege)
     {
-        ////채우기
+        connectAndSendCorrectionJson();
     }
 
     private void processAutoSpacingMessege(Message messege)
     {
-
+        connectAndSendSpacingJson();
     }
 
     private void renewCorrectionButtonsAsCorrectionButtonInformList(){
@@ -2126,7 +2133,7 @@ public class SoftKeyboard extends InputMethodService
     }
 
     private void autoFunctionThreadRun(AutoFunction thread){
-        thread = null;
+        autoFunctionThread = null;
         autoFunctionThread = new Thread(thread);
         autoFunctionThread.start();
     }
