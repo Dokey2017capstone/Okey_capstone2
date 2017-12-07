@@ -2,22 +2,104 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.3.0.aar\897f11baa3bb2c4a4b9464cd21a5764a\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
         optimize="true"
-        revision="25.0.2"
-        sha1="24a3a99c1f456c4fb784c3e6ea96c535ccd31e1f">
-        <dex dex="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_8045ac65cbb43a214ccd92271d7e3d7ca70b7dce\classes.dex" />
+        revision="26.0.2"
+        sha1="518768f3200963fbfec652f498da2c9d39245234">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\7.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\heo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.0\support-annotations-25.3.0.jar"
+        jumboMode="false"
+        min-sdk-version="16"
         optimize="true"
-        revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_fa23f2b3048f686594ff1bae92e59cb3a751e6c0\classes.dex" />
+        revision="26.0.2"
+        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.3.0.aar\cef84db016d2f73bfa168e70092051b4\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\support-v4-25.3.0.aar\158fd54583e5c06a499e360322cafa44\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.3.0.aar\a14239220c55fd1fcf931009a6e97d94\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\support-compat-25.3.0.aar\4e7435600c7d4df7607b7963f715284e\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.3.0.aar\492fd9ccfc4e59e89d0319fa6fdcc9b3\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\support-fragment-25.3.0.aar\b701f1ccce068408876aa9d9a910b496\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.3.0.aar\984f6514220309dc56eff9745f9b47d8\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\heo\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.3.0.aar\2905fc98fe881d14d5a1598bc9b7b372\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
+        <dex dex="C:\Users\heo\Desktop\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\preDex\release\2.jar" />
     </item>
 
 </items>
