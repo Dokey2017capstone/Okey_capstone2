@@ -1,16 +1,42 @@
 package capstone.kookmin.sksss.test2;
 
+import android.os.Message;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import static capstone.kookmin.sksss.test2.SoftKeyboard.MSG_DICTIONARY_RECEIVE;
+
 /**
  * Created by heo on 2017-12-07.
  */
 
-public class ApiDictionary {
+public class ApiDictionary implements Runnable {
+
+    private MessegeHandler messegeHandler;
+    private Message dictionaryMessege;
+    private String searchWord;
+
+    public ApiDictionary(MessegeHandler messegeHandler){
+        this.messegeHandler = messegeHandler;
+    }
+
+    public ApiDictionary(MessegeHandler messegeHandler, String word){
+        this.messegeHandler = messegeHandler;
+        this.searchWord = word;
+    }
+
+    @Override
+    public void run() {
+        String dictionaryContent = Apidictionary(searchWord);
+        Log.d("ㅇㅂㅇ", dictionaryContent);
+        dictionaryMessege = messegeHandler.obtainMessage(MSG_DICTIONARY_RECEIVE, dictionaryContent);
+        messegeHandler.sendMessage(dictionaryMessege);
+    }
 
     public static String Apidictionary(String word) {
         String Client_ID = "C9mX47eDWjeDFIxJzbm8";
@@ -36,7 +62,7 @@ public class ApiDictionary {
                     link_flag = true;
                 }
                 if (msg.contains("description")) {
-                    result += (msg.substring(16, msg.length() - 2) + "\n");
+                    result += (msg.substring(16, msg.length() - 2).replaceAll("<b>","").replaceAll("</b>","") + "\n");
                     description_flag = true;
                 }
                 if (link_flag == true && description_flag == true)
@@ -48,5 +74,10 @@ public class ApiDictionary {
             System.out.println(e);
         }
         return result;
+    }
+
+    void setSearchWord(String word)
+    {
+        searchWord = word;
     }
 }

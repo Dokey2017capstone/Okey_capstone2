@@ -19,15 +19,20 @@
 
 package capstone.kookmin.sksss.test2;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.text.method.MetaKeyKeyListener;
 import android.util.Log;
 import android.view.KeyCharacterMap;
@@ -48,6 +53,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,6 +79,7 @@ public class SoftKeyboard extends InputMethodService
     static final int MSG_REQUEST_RECEIVE = 3;
     static final int MSG_AUTO_CORRECTION_RECEIVE = 1;
     static final int MSG_AUTO_SPACING_RECEIVE = 2;
+    static final int MSG_DICTIONARY_RECEIVE = 4;
     //옵션창으로 전환할 keycode
     static final int CODE_OPTION_VIEW = -8;
     static final int CODE_AUTO_CORRECTION = -9;
@@ -118,9 +125,11 @@ public class SoftKeyboard extends InputMethodService
     private static final int port = 8100;
     private MessegeHandler messegeHandler = new MessegeHandler(this);
     private TcpClient tcp = new TcpClient(this, ip, port, messegeHandler);
-    Thread tcpThread;
+    Thread tcpThread = null;
     private AutoFunction autoFunction = new AutoFunction(messegeHandler);
     Thread autoFunctionThread = null;
+    private ApiDictionary apiDictionary = new ApiDictionary(messegeHandler);
+    Thread apiDictionaryThread = null;
 //    private static int NETWORK_DELAY = 2000; //서버 데이터 전송에 과부하를 막기위한 네트워크 딜레이(자동 오타수정, 띄어쓰기 기능 수행시)
 //    private long oldSendTime;
     //자동완성 및 DB 관련 -*-
@@ -460,6 +469,14 @@ public class SoftKeyboard extends InputMethodService
         Toast.makeText(this.getApplicationContext() , "수정 실패 : 이미 텍스트가 바뀌었습니다.", Toast.LENGTH_SHORT).show();
     }
 
+    private void makeDictionaryFailToast(){
+        Toast.makeText(this.getApplicationContext(), "네이버 API 및 네트워크 문제", Toast.LENGTH_SHORT).show();
+    }
+
+    private void makeNoSelectedTextToast(){
+        Toast.makeText(this.getApplicationContext(), "검색할 단어를 블럭해 주세요.", Toast.LENGTH_SHORT).show();
+    }
+
     //자동완성 버튼 수정
     void setCompletionButton(String[] completionWordList)
     {
@@ -647,11 +664,16 @@ public class SoftKeyboard extends InputMethodService
         if(isAutoFunctionNotRun()) {
             Log.d("softKeyboard","is작동???");
             autoFunctionThreadRun(autoFunction);
+//            this.<AutoFunction>generalThreadRun(autoFunctionThread, autoFunction);
         }
     }
 
     private boolean isAutoFunctionNotRun(){
         return (autoFunctionThread == null || autoFunctionThread.getState() == Thread.State.TERMINATED || autoFunctionThread.getState() == Thread.State.BLOCKED);
+    }
+
+    private boolean isThreadNotRun(Thread thread){
+        return (thread == null || thread.getState() == Thread.State.TERMINATED || thread.getState() == Thread.State.BLOCKED);
     }
 
     @Override
@@ -1037,18 +1059,62 @@ public class SoftKeyboard extends InputMethodService
                 autoFunction.toggleIsAutoSpacing();
                 break;
             case CODE_DICTIONARY_SEARCH:
-
+                if(getCurrentInputConnection().getSelectedText(0) == null) {
+                    makeNoSelectedTextToast();
+                    break;
+                }
+                requestDictionary(getCurrentInputConnection().getSelectedText(0).toString());
                 break;
         }
     }
 
-    private void popUpDIctionaryResult(){
-        String dictionaryText = dictionarySearchForSelectedText();
-        ////////////////////////////////////////
+    private void requestDictionary(String word){
+        apiDictionary.setSearchWord(word);
+        apiDictionaryThreadRun(apiDictionary);
     }
 
-    private String dictionarySearchForSelectedText(){
-        return ApiDictionary.Apidictionary(getCurrentInputConnection().getSelectedText(0).toString());
+    private void popUpDictionaryResult(Message message){
+        if(message.obj.toString() == null || message.obj.toString().equals(""))
+        {
+            makeDictionaryFailToast();
+            return;
+        }
+        String[] dictionaryContents = message.obj.toString().split("\\n");
+        Log.d("링크", dictionaryContents[0]);
+        Log.d("뜻", dictionaryContents[1]);
+//        final String dictionaryUrl = dictionaryContents[0];
+//        String dictionaryText = dictionaryContents[1];
+
+        Intent alertIntent;
+        alertIntent = new Intent(this, DialogActivity.class);
+        alertIntent.putExtra("dictContents",dictionaryContents);
+        alertIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(alertIntent);
+
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//
+//        alertDialogBuilder.setTitle("네이버 백과사전");
+//
+//        alertDialogBuilder
+//                .setMessage(dictionaryText)
+//                .setCancelable(false)
+//                .setPositiveButton("더보기",
+//                        new DialogInterface.OnClickListener(){
+//                            public void onClick(DialogInterface dialog, int id){
+//                                Intent webDictionaryIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dictionaryUrl));
+//                                startActivity(webDictionaryIntent);
+//                            }
+//                        })
+//                .setNegativeButton("닫기",
+//                        new DialogInterface.OnClickListener(){
+//                            public void onClick(DialogInterface dialog, int id){
+//                                dialog.cancel();
+//                            }
+//                        });
+//
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//
+//        alertDialog.show();
     }
 
     //하드키 판별 함수
@@ -1059,6 +1125,7 @@ public class SoftKeyboard extends InputMethodService
             case CODE_OPTION_VIEW:
             case CODE_AUTO_CORRECTION:
             case CODE_AUTO_SPACING:
+            case CODE_DICTIONARY_SEARCH:
                 return true;
             default:
                 return false;
@@ -2021,8 +2088,6 @@ public class SoftKeyboard extends InputMethodService
         return rePlaceStr;
     }
 
-
-
     //softKeyboard에서 처리하는 메시지핸들러
     public void handleMessage(Message messege){
 
@@ -2036,6 +2101,9 @@ public class SoftKeyboard extends InputMethodService
                 break;
             case MSG_AUTO_SPACING_RECEIVE:
                 processAutoSpacingMessege(messege);
+                break;
+            case MSG_DICTIONARY_RECEIVE:
+                popUpDictionaryResult(messege);
                 break;
         }
     }
@@ -2153,6 +2221,14 @@ public class SoftKeyboard extends InputMethodService
         autoFunctionThread = null;
         autoFunctionThread = new Thread(thread);
         autoFunctionThread.start();
+        Log.d("numThread",String.valueOf(Thread.activeCount()));
+    }
+
+    private void apiDictionaryThreadRun(ApiDictionary thread){
+        apiDictionaryThread = null;
+        apiDictionaryThread = new Thread(thread);
+        apiDictionaryThread.start();
+        Log.d("numThread",String.valueOf(Thread.activeCount()));
     }
 
     //tcp 연결 해제

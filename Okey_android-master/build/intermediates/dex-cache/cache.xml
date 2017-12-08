@@ -2,22 +2,31 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\sksss\.android\build-cache\01da58127a30c1fa3b3bf881f9bacfc1ac1412f8\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="24a3a99c1f456c4fb784c3e6ea96c535ccd31e1f">
-        <dex dex="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_8045ac65cbb43a214ccd92271d7e3d7ca70b7dce\classes.dex" />
+        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
+        <dex dex="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\pre-dexed\debug\classes_4294c9288f29d7db8fba6a239510f65de15898a7.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\sksss\.android\build-cache\aebc8253f6ef57d16c5af7bc7f0c8eddbda7aa8e\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_fa23f2b3048f686594ff1bae92e59cb3a751e6c0\classes.dex" />
+        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
+        <dex dex="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\pre-dexed\debug\classes_2e5b1030342fa4a3ce4977f6853696a487e8a1f5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\sksss\.android\build-cache\1b051158d991345ff79b96be15a3b90421a30cb5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9ab787a20aae245b5b3651ae0b9c38459eb37715">
+        <dex dex="C:\Users\sksss\Desktop\cap2code\Okey_capstone2\Okey_android-master\app\build\intermediates\pre-dexed\debug\classes_66649829160f4d27169a28c63f2ef2ddca0efac0.jar" />
     </item>
 
 </items>

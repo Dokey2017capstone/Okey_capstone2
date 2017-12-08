@@ -9,4 +9,5 @@
     <string name="label_send_key">Send</string>
     <!-- Title for Latin keyboard  -->
     <string name="ime_name">한글입력기</string>
+    <string name="title_activity_dialog">DialogActivity</string>
 </resources>
