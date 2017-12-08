@@ -17,6 +17,10 @@
             android:keyWidth="100%p"/>
     </Row>
     <Row>
+        <Key android:codes="-12" android:keyLabel="한 → EN" android:keyEdgeFlags="left"
+            android:keyWidth="50%p"/>
+        <Key android:codes="-13" android:keyLabel="EN → 한" android:keyEdgeFlags="left"
+            android:keyWidth="50%p"/>
     </Row>
     <Row>
         <Key android:codes="-8" android:keyLabel="복귀" android:keyEdgeFlags="left" android:keyWidth="100%p" />
