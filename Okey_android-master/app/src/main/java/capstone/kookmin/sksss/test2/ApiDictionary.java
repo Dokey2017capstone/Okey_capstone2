@@ -36,7 +36,7 @@ public class ApiDictionary {
                     link_flag = true;
                 }
                 if (msg.contains("description")) {
-                    result += (msg.substring(16, msg.length() - 2) + "\n");
+                    result += (msg.substring(16, msg.length() - 2).replaceAll("<b>","").replaceAll("</b>","") + "\n");
                     description_flag = true;
                 }
                 if (link_flag == true && description_flag == true)
