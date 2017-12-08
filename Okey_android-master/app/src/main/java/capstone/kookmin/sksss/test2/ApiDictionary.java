@@ -56,13 +56,16 @@ public class ApiDictionary implements Runnable {
             String msg = null;
             Boolean link_flag = false;
             Boolean description_flag = false;
+            int link_start = 9;
+            int description_start = 16;
+            int end = 2;
             while ((msg = br.readLine()) != null) {
                 if (msg.contains("link")) {
-                    result += (msg.substring(9, msg.length() - 2) + "\n");
+                    result += (msg.substring(link_start, msg.length() - end) + "\n");
                     link_flag = true;
                 }
                 if (msg.contains("description")) {
-                    result += (msg.substring(16, msg.length() - 2).replaceAll("<b>","").replaceAll("</b>","") + "\n");
+                    result += (msg.substring(description_start, msg.length() - end).replaceAll("<b>","").replaceAll("</b>","") + "\n");
                     description_flag = true;
                 }
                 if (link_flag == true && description_flag == true)
