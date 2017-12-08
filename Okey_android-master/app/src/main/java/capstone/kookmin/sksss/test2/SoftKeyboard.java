@@ -41,6 +41,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import android.widget.Button;
@@ -61,6 +62,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static capstone.kookmin.sksss.test2.APItranslate.TRAN_EN_TO_KO;
+import static capstone.kookmin.sksss.test2.APItranslate.TRAN_KO_TO_EN;
+
 public class SoftKeyboard extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
 
@@ -80,12 +84,16 @@ public class SoftKeyboard extends InputMethodService
     static final int MSG_AUTO_CORRECTION_RECEIVE = 1;
     static final int MSG_AUTO_SPACING_RECEIVE = 2;
     static final int MSG_DICTIONARY_RECEIVE = 4;
+    static final int MSG_TRANSLATE_RECEIVE = 5;
+    static final int MSG_ERROR_RECEIVE = 6;
     //옵션창으로 전환할 keycode
     static final int CODE_OPTION_VIEW = -8;
     static final int CODE_AUTO_CORRECTION = -9;
     static final int CODE_AUTO_SPACING = -10;
     static final int CODE_SYMBOL_KEYBOARD = -7;
     static final int CODE_DICTIONARY_SEARCH = -11;
+    static final int CODE_TRAN_KO_TO_EN = -12;
+    static final int CODE_TRAN_EN_TO_KO = -13;
 
     private KeyboardView mInputView;
 //    private CompletionInfo[] mCompletions;
@@ -130,6 +138,8 @@ public class SoftKeyboard extends InputMethodService
     Thread autoFunctionThread = null;
     private ApiDictionary apiDictionary = new ApiDictionary(messegeHandler);
     Thread apiDictionaryThread = null;
+    private APItranslate apiTranslate = new APItranslate(messegeHandler);
+    Thread apiTranslateThread = null;
 //    private static int NETWORK_DELAY = 2000; //서버 데이터 전송에 과부하를 막기위한 네트워크 딜레이(자동 오타수정, 띄어쓰기 기능 수행시)
 //    private long oldSendTime;
     //자동완성 및 DB 관련 -*-
@@ -475,6 +485,10 @@ public class SoftKeyboard extends InputMethodService
 
     private void makeNoSelectedTextToast(){
         Toast.makeText(this.getApplicationContext(), "검색할 단어를 블럭해 주세요.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void makeNoExtractTextToast(){
+        Toast.makeText(this.getApplicationContext(),"텍스트를 입력해 주세요.", Toast.LENGTH_SHORT).show();
     }
 
     //자동완성 버튼 수정
@@ -1065,12 +1079,35 @@ public class SoftKeyboard extends InputMethodService
                 }
                 requestDictionary(getCurrentInputConnection().getSelectedText(0).toString());
                 break;
+            case CODE_TRAN_EN_TO_KO:
+                int translateFlag = TRAN_EN_TO_KO;
+                TextCheckAndRequestTranslate(translateFlag);
+                break;
+            case CODE_TRAN_KO_TO_EN:
+                translateFlag = TRAN_KO_TO_EN;
+                TextCheckAndRequestTranslate(translateFlag);
+                break;
         }
+    }
+
+    private void TextCheckAndRequestTranslate(int translateFlag){
+        ExtractedText rowExtractedText = getCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
+        if(rowExtractedText == null){
+            makeNoExtractTextToast();
+            return;
+        }
+        requestTranslate(rowExtractedText.text.toString(), translateFlag);
     }
 
     private void requestDictionary(String word){
         apiDictionary.setSearchWord(word);
         apiDictionaryThreadRun(apiDictionary);
+    }
+
+    private void requestTranslate(String word, int flag){
+        apiTranslate.setRowText(word);
+        apiTranslate.setTranslateFlag(flag);
+        apiTranslateThreadRun(apiTranslate);
     }
 
     private void popUpDictionaryResult(Message message){
@@ -1117,6 +1154,17 @@ public class SoftKeyboard extends InputMethodService
 //        alertDialog.show();
     }
 
+    private void replaceTranslationText(Message message){
+        InputConnection inputConnection = getCurrentInputConnection();
+        inputConnection.finishComposingText();
+        inputConnection.deleteSurroundingText(MAX_TEXT,MAX_TEXT);
+        inputConnection.commitText(message.obj.toString(),1);
+    }
+
+    private void popupErrorMessage(Message message){
+        Toast.makeText(this.getApplicationContext(),message.obj.toString(),Toast.LENGTH_SHORT).show();
+    }
+
     //하드키 판별 함수
     private boolean isHardKey(int primaryCode){
         switch (primaryCode){
@@ -1126,6 +1174,8 @@ public class SoftKeyboard extends InputMethodService
             case CODE_AUTO_CORRECTION:
             case CODE_AUTO_SPACING:
             case CODE_DICTIONARY_SEARCH:
+            case CODE_TRAN_EN_TO_KO:
+            case CODE_TRAN_KO_TO_EN:
                 return true;
             default:
                 return false;
@@ -2105,6 +2155,12 @@ public class SoftKeyboard extends InputMethodService
             case MSG_DICTIONARY_RECEIVE:
                 popUpDictionaryResult(messege);
                 break;
+            case MSG_TRANSLATE_RECEIVE:
+                replaceTranslationText(messege);
+                break;
+            case MSG_ERROR_RECEIVE:
+                popupErrorMessage(messege);
+                break;
         }
     }
 
@@ -2228,6 +2284,13 @@ public class SoftKeyboard extends InputMethodService
         apiDictionaryThread = null;
         apiDictionaryThread = new Thread(thread);
         apiDictionaryThread.start();
+        Log.d("numThread",String.valueOf(Thread.activeCount()));
+    }
+
+    private void apiTranslateThreadRun(APItranslate thread){
+        apiTranslateThread = null;
+        apiTranslateThread = new Thread(thread);
+        apiTranslateThread.start();
         Log.d("numThread",String.valueOf(Thread.activeCount()));
     }
 
