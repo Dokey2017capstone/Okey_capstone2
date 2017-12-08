@@ -30,14 +30,11 @@ public class AutoFunction implements Runnable{
     @Override
     public void run() {
         while(true) {
-//            Log.d("AutoFunction", "run1");
 
             currentTime = System.currentTimeMillis();
             //필드 에딧팅 끝나면 fieldEditingFlag를 false로 설정
             if (isFinishTextFieldEditing() && fieldEditingFlag) {
-//                Log.d("AutoFunction", "run2");
                 if (isAutoSpacing) {
-                    Log.d("AutoFunction", "run3");
                     autoSpacingMessage = messegeHandler.obtainMessage(MSG_AUTO_SPACING_RECEIVE);
                     messegeHandler.sendMessage(autoSpacingMessage);
                 }
@@ -46,7 +43,6 @@ public class AutoFunction implements Runnable{
             }
 
             if (isAutoCorrection && fieldEditingFlag && isAutoCorrectionTime()) {
-                Log.d("AutoFunction", "run4");
                 autoCorrectionMessage = messegeHandler.obtainMessage(MSG_AUTO_CORRECTION_RECEIVE);
                 messegeHandler.sendMessage(autoCorrectionMessage);
                 lastAutoCorrectionTime = currentTime;

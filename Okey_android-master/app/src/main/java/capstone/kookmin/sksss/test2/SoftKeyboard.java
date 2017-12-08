@@ -85,6 +85,7 @@ public class SoftKeyboard extends InputMethodService
     static final int MSG_AUTO_SPACING_RECEIVE = 2;
     static final int MSG_DICTIONARY_RECEIVE = 4;
     static final int MSG_TRANSLATE_RECEIVE = 5;
+    static final int MSG_ERROR_RECEIVE = 6;
     //옵션창으로 전환할 keycode
     static final int CODE_OPTION_VIEW = -8;
     static final int CODE_AUTO_CORRECTION = -9;
@@ -1079,19 +1080,23 @@ public class SoftKeyboard extends InputMethodService
                 requestDictionary(getCurrentInputConnection().getSelectedText(0).toString());
                 break;
             case CODE_TRAN_EN_TO_KO:
-                int translateFlag = TRAN_KO_TO_EN;
+                int translateFlag = TRAN_EN_TO_KO;
+                TextCheckAndRequestTranslate(translateFlag);
+                break;
             case CODE_TRAN_KO_TO_EN:
-                translateFlag = TRAN_EN_TO_KO;
-
-                ExtractedText rowExtractedText = getCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
-                if(rowExtractedText == null){
-                    makeNoExtractTextToast();
-                    break;
-                }
-                requestTranslate(rowExtractedText.text.toString(), translateFlag);
-
+                translateFlag = TRAN_KO_TO_EN;
+                TextCheckAndRequestTranslate(translateFlag);
                 break;
         }
+    }
+
+    private void TextCheckAndRequestTranslate(int translateFlag){
+        ExtractedText rowExtractedText = getCurrentInputConnection().getExtractedText(new ExtractedTextRequest(), 0);
+        if(rowExtractedText == null){
+            makeNoExtractTextToast();
+            return;
+        }
+        requestTranslate(rowExtractedText.text.toString(), translateFlag);
     }
 
     private void requestDictionary(String word){
@@ -1154,6 +1159,10 @@ public class SoftKeyboard extends InputMethodService
         inputConnection.finishComposingText();
         inputConnection.deleteSurroundingText(MAX_TEXT,MAX_TEXT);
         inputConnection.commitText(message.obj.toString(),1);
+    }
+
+    private void popupErrorMessage(Message message){
+        Toast.makeText(this.getApplicationContext(),message.obj.toString(),Toast.LENGTH_SHORT).show();
     }
 
     //하드키 판별 함수
@@ -2148,7 +2157,9 @@ public class SoftKeyboard extends InputMethodService
                 break;
             case MSG_TRANSLATE_RECEIVE:
                 replaceTranslationText(messege);
-                //구현하세요
+                break;
+            case MSG_ERROR_RECEIVE:
+                popupErrorMessage(messege);
                 break;
         }
     }
